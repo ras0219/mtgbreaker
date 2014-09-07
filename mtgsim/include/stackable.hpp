@@ -4,19 +4,21 @@
 
 struct Stackable
 {
-    virtual ~Stackable() {}
-    virtual void resolve(struct Game* g) = 0;
-
     enum Type
     {
         SPELL
     } type;
+
+    Stackable(Type t) : type(t) {}
+
+    virtual ~Stackable() {}
+    virtual void resolve(struct Game* g) = 0;
 };
 
 template<class C>
 struct SpellStackable : Stackable
 {
-    SpellStackable(C* c) : Stackable{ SPELL }, card(c) {}
+    SpellStackable(C* c) : Stackable(SPELL), card(c) {}
 
     C* card;
 };

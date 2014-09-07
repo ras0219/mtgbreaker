@@ -49,3 +49,33 @@ const CardInfo CardMixin<Swamp>::info_data = {
     0,
     0
 };
+
+const CardInfo CardMixin<Mountain>::info_data = {
+    "mountain",
+    "Mountain",
+    { "colorless", "land", "basicland" },
+    0,
+    SMP<>(),
+    0,
+    0
+};
+
+const CardInfo CardMixin<Island>::info_data = {
+    "island",
+    "Island",
+    { "colorless", "land", "basicland" },
+    0,
+    SMP<>(),
+    0,
+    0
+};
+
+const CardInfo CardMixin<Plains>::info_data = {
+    "plains",
+    "Plains",
+    { "colorless", "land", "basicland" },
+    0,
+    SMP<>(),
+    0,
+    0
+};

@@ -5,8 +5,10 @@
 #include "land.hpp"
 
 struct Forest : LandMixinEx<Forest> {};
-
 struct Swamp : LandMixinEx<Swamp> {};
+struct Mountain : LandMixinEx<Mountain> {};
+struct Island : LandMixinEx<Island> {};
+struct Plains : LandMixinEx<Plains> {};
 
 struct ChargingBadger : CreatureMixinEx<ChargingBadger> {};
 
