@@ -27,3 +27,10 @@ void Player::draw(unsigned int n) {
     hand.insert(hand.end(), it, library.end());
     library.erase(it, library.end());
 }
+
+void Player::apply_damage(int dmg) {
+    life -= dmg;
+    if (life <= 0)
+        loss_pending = true;
+    std::cerr << "P" << (size_t)this << " takes " << dmg << " dmg. [" << life << "]" << std::endl;
+}

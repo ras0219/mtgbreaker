@@ -23,7 +23,7 @@ struct PlayerLogic
 
     /// Declare blockers
     /// <return>list of (blocker, attacker)</return>
-    virtual std::vector<std::pair<Card*, Card*>> block(Game* g, Player* p, std::vector<Card*> const& attackers) { return std::vector<std::pair<Card*, Card*>>(); }
+    virtual std::vector<std::pair<Card*, Card*>> block(Game* g, Player* p) { return std::vector<std::pair<Card*, Card*>>(); }
 
     /// Respond to cards
     virtual struct Response* respond(Game* g, Player* p, struct Choice* ch) { return nullptr; }

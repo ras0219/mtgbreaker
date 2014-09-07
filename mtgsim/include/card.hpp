@@ -49,7 +49,7 @@ struct CardClassImpl : CardClass
 
 struct Card
 {
-    Card(Player* p = nullptr) : owner(p), controller(p), tapped(false) {}
+    Card(Player* p = nullptr) : owner(p), controller(p), tapped(false), sick(true), damage(0) {}
     virtual ~Card() {}
     virtual const CardInfo& info() const = 0;
     virtual const CardClass& cardclass() const = 0;
@@ -57,6 +57,8 @@ struct Card
     struct Player* owner;
     struct Player* controller;
     bool tapped;
+    bool sick;
+    unsigned int damage;
 };
 
 template<class Derived, class Base = Card>

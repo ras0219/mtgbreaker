@@ -61,4 +61,7 @@ struct Game
     std::vector<Card*> exile;
     std::vector<Card*> battlefield;
     std::vector<struct Stackable*> stack;
+
+    std::vector<std::pair<Card*, Card*>> atk_blk;
+    std::vector<Card*> pending_death;
 };

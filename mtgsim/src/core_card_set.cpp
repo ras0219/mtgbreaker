@@ -33,7 +33,7 @@ const CardInfo CardMixin<TyphoidRats>::info_data = {
 const CardInfo CardMixin<Forest>::info_data = {
     "forest",
     "Forest",
-    { "green", "land", "basicland" },
+    { "colorless", "land", "basicland" },
     0,
     SMP<>(),
     0,
@@ -43,7 +43,7 @@ const CardInfo CardMixin<Forest>::info_data = {
 const CardInfo CardMixin<Swamp>::info_data = {
     "swamp",
     "Swamp",
-    { "black", "land", "basicland" },
+    { "colorless", "land", "basicland" },
     0,
     SMP<>(),
     0,
