@@ -33,6 +33,9 @@
     <ClCompile Include="src\playerlogic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\game.hpp">
@@ -60,6 +63,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\core_card_set.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\playerlogic.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\player.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

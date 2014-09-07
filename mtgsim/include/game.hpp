@@ -3,32 +3,7 @@
 #include "card.hpp"
 #include "mana.hpp"
 
-struct Game;
-struct Player;
-
-struct PlayerLogic
-{
-    virtual ~PlayerLogic() {}
-    virtual struct Action* next_action(Game* g, Player* p) { return nullptr; }
-    // Partition hand such that cards after the returned iterator are discardable
-    virtual std::vector<Card*>::iterator discard(Game* g, Player* p, int diff);
-};
-
-struct Player
-{
-    Player(Deck const& deck, PlayerLogic* l);
-    void draw(unsigned int n = 1);
-
-    std::vector<Card*> library;
-    std::vector<Card*> hand;
-    std::vector<Card*> graveyard;
-
-    bool loss_pending;
-    int life;
-    ManaPool mana;
-
-    PlayerLogic* ai;
-};
+struct PlayerLogic;
 
 struct Game
 {

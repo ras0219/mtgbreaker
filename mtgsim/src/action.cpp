@@ -1,6 +1,7 @@
 #include "utility.hpp"
 #include "action.hpp"
 #include "game.hpp"
+#include "player.hpp"
 #include <algorithm>
 #include <stdexcept>
 #include <cassert>

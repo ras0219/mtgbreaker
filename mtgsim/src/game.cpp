@@ -1,33 +1,11 @@
 #include "game.hpp"
 #include "action.hpp"
 #include "stackable.hpp"
+#include "player.hpp"
+#include "playerlogic.hpp"
 #include <algorithm>
 #include <iostream>
-
-Player::Player(Deck const& d, PlayerLogic* l) : loss_pending(false), life(20), ai(l)
-{
-    // Create a new library instance
-    library = d.instance(this);
-    std::random_shuffle(library.begin(), library.end());
-    if (library.size() < 7) {
-        throw std::runtime_error("Deck must be at least 7 cards.");
-    }
-    // Move the top 7 cards into the hand
-    draw(7);
-}
-
-void Player::draw(unsigned int n) {
-    std::cerr << "Player " << (size_t)this << " draws: " << n << "/" << library.size() << std::endl;
-
-    if (n > library.size())
-    {
-        loss_pending = true;
-        n = library.size();
-    }
-    auto it = library.end() - n;
-    hand.insert(hand.end(), it, library.end());
-    library.erase(it, library.end());
-}
+#include <cassert>
 
 void Game::play() {
     Player* loser = nullptr;
@@ -131,7 +109,9 @@ void Game::cleanup() {
     if (diff > 0)
     {
         std::cerr << "P" << (size_t)p << " is forced to discard." << std::endl;
-        auto it = p->ai->discard(this, p, diff);
-        p->hand.erase(it, p->hand.end());
+        // Give player a chance to choose
+        p->ai->discard(this, p, diff);
+        assert(p->hand.size() >= (size_t)diff);
+        p->hand.erase(p->hand.end() - diff, p->hand.end());
     }
 }

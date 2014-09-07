@@ -70,6 +70,7 @@
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\mana.cpp" />
+    <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\playerlogic.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +81,8 @@
     <ClInclude Include="include\game.hpp" />
     <ClInclude Include="include\land.hpp" />
     <ClInclude Include="include\mana.hpp" />
+    <ClInclude Include="include\player.hpp" />
+    <ClInclude Include="include\playerlogic.hpp" />
     <ClInclude Include="include\stackable.hpp" />
     <ClInclude Include="include\utility.hpp" />
   </ItemGroup>

@@ -3,6 +3,8 @@
 #include "creature.hpp"
 #include "land.hpp"
 #include "core_card_set.hpp"
+#include "playerlogic.hpp"
+#include "player.hpp"
 #include <iostream>
 
 Deck deck1 =
