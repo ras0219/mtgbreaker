@@ -8,7 +8,7 @@ const CardInfo CardMixin<ChargingBadger>::info_data = {
     "Charging Badger",
     { "green", "creature", "badger", "trample" },
     1,
-    SMP<ManaPool::GREEN>(),
+    ManaPool(std::array<unsigned int, 6>{{0, 1, 0, 0, 0, 0}}),
     1,
     1
 };
@@ -18,7 +18,7 @@ const CardInfo CardMixin<WalkingCorpse>::info_data = {
     "Walking Corpse",
     { "black", "creature", "zombie" },
     2,
-    SMP<ManaPool::BLACK, ManaPool::COLORLESS>(),
+    ManaPool(std::array<unsigned int, 6>{{1, 0, 1, 0, 0, 0}}),
     2,
     2
 };
@@ -28,7 +28,7 @@ const CardInfo CardMixin<TyphoidRats>::info_data = {
     "Typhoid Rats",
     { "black", "creature", "rat", "deathtouch" },
     1,
-    SMP<ManaPool::BLACK>(),
+    ManaPool(std::array<unsigned int, 6>{{0, 0, 1, 0, 0, 0}}),
     1,
     1
 };
@@ -38,7 +38,7 @@ const CardInfo CardMixin<AlloyMyr>::info_data = {
     "Alloy Myr",
     { "colorless", "artifact", "creature", "myr" },
     3,
-    SMP<ManaPool::COLORLESS, ManaPool::COLORLESS, ManaPool::COLORLESS>(),
+    ManaPool(std::array<unsigned int, 6>{{3, 0, 0, 0, 0, 0}}),
     2,
     2
 };
@@ -59,7 +59,7 @@ const CardInfo CardMixin<LightningBolt>::info_data = {
     "Lightning Bolt",
     { "red", "instant" },
     1,
-    SMP<ManaPool::RED>(),
+    ManaPool(std::array<unsigned int, 6>{{0, 0, 0, 0, 0, 1}}),
     0,
     0
 };

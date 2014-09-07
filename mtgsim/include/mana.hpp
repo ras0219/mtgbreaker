@@ -95,4 +95,4 @@ struct StaticManaPool : impl::StaticManaPoolImpl<impl::StaticManaPoolHelperBase,
 {};
 
 template<ManaPool::Type...Ts>
-const ManaPool& SMP() { return StaticManaPool<Ts...>::value; }
+ManaPool SMP() { return StaticManaPool<Ts...>::value; }

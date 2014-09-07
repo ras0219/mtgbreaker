@@ -5,12 +5,6 @@
 #include "action.hpp"
 #include "stackable.hpp"
 
-template<class Derived>
-struct CreatureStackable
-{
-
-};
-
 template<class Derived, class Base = Card>
 struct CreatureMixin : Base
 {
