@@ -87,6 +87,7 @@
     <ClInclude Include="include\playerlogic.hpp" />
     <ClInclude Include="include\stackable.hpp" />
     <ClInclude Include="include\utility.hpp" />
+    <ClInclude Include="src\spell.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

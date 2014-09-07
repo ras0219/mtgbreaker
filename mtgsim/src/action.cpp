@@ -33,7 +33,7 @@ void PlayLandAction::enact(Game* g, Player* p)
     g->lands_played = 1;
 }
 
-const char* CastSpell::check(Game* g, Player* p)
+const char* CastSpellAction::check(Game* g, Player* p)
 {
     CHECK_RETURN(g);
     CHECK_RETURN(p);
@@ -51,7 +51,7 @@ const char* CastSpell::check(Game* g, Player* p)
     return nullptr;
 }
 
-void CastSpell::enact(Game* g, Player* p)
+void CastSpellAction::enact(Game* g, Player* p)
 {
     assert(check(g, p) == nullptr);
 

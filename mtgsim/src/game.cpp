@@ -38,6 +38,8 @@ void Game::play() {
 }
 
 void Game::untap() {
+    lands_played = 0;
+
     for (auto c : battlefield)
     {
         if (c->owner == active_player)
@@ -182,12 +184,6 @@ void Game::attack() {
     }
 }
 
-void apply_damage(Game* g, Card* c, int dmg) {
-    c->damage += dmg;
-    if (c->damage >= c->info().toughness)
-        g->pending_death.push_back(c);
-}
-
 void Game::block() {
     priority = active_player;
     state = BLOCKERS;
@@ -224,12 +220,12 @@ void Game::damage() {
     for (auto a : atk_blk) {
         if (a.second != nullptr) {
             // There is a blocker. ROUND 1! Fight!
-            apply_damage(this, a.first, a.second->info().power);
-            apply_damage(this, a.second, a.first->info().power);
+            a.first->apply_damage(this, a.second->info().power);
+            a.second->apply_damage(this, a.first->info().power);
         } else {
             // There isn't a blocker. Hurt 'em plenty.
             auto passive_player = next_player();
-            passive_player->apply_damage(a.first->info().power);
+            passive_player->apply_damage(this, a.first->info().power);
         }
     }
 

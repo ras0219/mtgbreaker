@@ -54,6 +54,30 @@ void AlloyMyr::tap_for_mana(Game* g, Player* p, ManaPool::Type t) {
     p->mana += t;
 }
 
+const CardInfo CardMixin<LightningBolt>::info_data = {
+    "lightningbolt",
+    "Lightning Bolt",
+    { "red", "instant" },
+    1,
+    SMP<ManaPool::RED>(),
+    0,
+    0
+};
+
+void LightningBolt::enact(Game* g, Player* p, Player* target) {
+    target->apply_damage(g, 3);
+}
+
+void LightningBolt::enact(Game* g, Player* p, Card* target) {
+    if (!target->info().has("creature"))
+        throw std::runtime_error("Target is not a creature");
+    if (g->battlefield.end() == g->find_in_battlefield(target))
+        throw std::runtime_error("Target is not in play");
+    target->apply_damage(g, 3);
+}
+
+
+/// Lands
 const CardInfo CardMixin<Forest>::info_data = {
     "forest",
     "Forest",

@@ -57,6 +57,7 @@ struct Card
     virtual const CardClass& cardclass() const = 0;
 
     const char* check_tap(Game* g, Player* p);
+    void apply_damage(Game* g, int dmg);
 
     struct Player* owner;
     struct Player* controller;

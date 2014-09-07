@@ -14,3 +14,9 @@ const char* Card::check_tap(Game* g, Player* p) {
 
     return nullptr;
 }
+
+void Card::apply_damage(Game* g, int dmg) {
+    damage += dmg;
+    if (damage >= info().toughness)
+        g->pending_death.push_back(this);
+}

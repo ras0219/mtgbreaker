@@ -49,6 +49,10 @@ struct Game
         CLEANUP
     } state;
 
+    std::vector<Card*>::iterator find_in_battlefield(Card* c) {
+        return std::find(battlefield.begin(), battlefield.end(), c);
+    }
+
     int turn_number;
 
     Player* p1;
