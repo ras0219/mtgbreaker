@@ -54,8 +54,8 @@ const char* check_cost(Game* g, Player* p, ManaPool const& cost, std::vector<Car
     auto& bf = g->battlefield;
     for (auto m : mana)
     {
-        // Does the player own it?
-        CHECK_RETURN(m->owner != p);
+        // Does the player control it?
+        CHECK_RETURN(m->controller != p);
         // Is it in play?
         CHECK_RETURN(std::find(bf.begin(), bf.end(), m) != bf.end());
         // Is it not tapped?
