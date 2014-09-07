@@ -66,8 +66,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\action.cpp" />
+    <ClCompile Include="src\card.cpp" />
     <ClCompile Include="src\core_card_set.cpp" />
     <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\land.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\mana.cpp" />
     <ClCompile Include="src\player.cpp" />

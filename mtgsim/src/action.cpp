@@ -33,43 +33,6 @@ void PlayLandAction::enact(Game* g, Player* p)
     g->lands_played = 1;
 }
 
-void gain_mana(Card* c, ManaPool& mpool) {
-    auto& i = c->info();
-    if (i.id == "forest")
-        mpool[ManaPool::GREEN]++;
-    else if (i.id == "plains")
-        mpool[ManaPool::WHITE]++;
-    else if (i.id == "swamp")
-        mpool[ManaPool::BLACK]++;
-    else if (i.id == "island")
-        mpool[ManaPool::BLUE]++;
-    else if (i.id == "mountain")
-        mpool[ManaPool::RED]++;
-}
-
-const char* check_cost(Game* g, Player* p, ManaPool const& cost, std::vector<Card*> const& mana)
-{
-    ManaPool mpool = p->mana;
-
-    auto& bf = g->battlefield;
-    for (auto m : mana)
-    {
-        // Does the player control it?
-        CHECK_RETURN(m->controller != p);
-        // Is it in play?
-        CHECK_RETURN(std::find(bf.begin(), bf.end(), m) != bf.end());
-        // Is it not tapped?
-        CHECK_RETURN(!m->tapped);
-        // Is it a basic land?
-        auto& i = m->info();
-        CHECK_RETURN(i.id == "forest" || i.id == "plains" || i.id == "swamp" || i.id == "island" || i.id == "mountain");
-        gain_mana(m, mpool);
-    }
-
-    CHECK_RETURN(mpool >= cost);
-    return nullptr;
-}
-
 const char* CastSpell::check(Game* g, Player* p)
 {
     CHECK_RETURN(g);
@@ -84,10 +47,7 @@ const char* CastSpell::check(Game* g, Player* p)
         CHECK_RETURN(g->active_player == p);
         CHECK_RETURN(g->stack.empty());
     }
-    auto r = check_cost(g, p, info.cost, mana);
-    if (r) return r;
-    // don't handle other costs yet
-    CHECK_RETURN(other.empty());
+    CHECK_RETURN(p->mana >= info.cost);
     return nullptr;
 }
 
@@ -102,12 +62,6 @@ void CastSpell::enact(Game* g, Player* p)
     std::swap(*it, p->hand.back());
     p->hand.pop_back();
 
-    // Tap Mana and Mana-Equivalents
-    for (auto m : mana)
-    {
-        m->tapped = true;
-        gain_mana(m, p->mana);
-    }
     // Pay the cost
     p->mana -= i.cost;
 

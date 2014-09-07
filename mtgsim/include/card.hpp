@@ -5,6 +5,8 @@
 #include <memory>
 #include "mana.hpp"
 
+struct Game;
+
 struct CardInfo
 {
     std::string id;
@@ -53,6 +55,8 @@ struct Card
     virtual ~Card() {}
     virtual const CardInfo& info() const = 0;
     virtual const CardClass& cardclass() const = 0;
+
+    const char* check_tap(Game* g, Player* p);
 
     struct Player* owner;
     struct Player* controller;

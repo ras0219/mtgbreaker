@@ -1,4 +1,7 @@
 #include "core_card_set.hpp"
+#include "utility.hpp"
+#include "game.hpp"
+#include "player.hpp"
 
 const CardInfo CardMixin<ChargingBadger>::info_data = {
     "chargingbadger",
@@ -29,6 +32,27 @@ const CardInfo CardMixin<TyphoidRats>::info_data = {
     1,
     1
 };
+
+const CardInfo CardMixin<AlloyMyr>::info_data = {
+    "alloymyr",
+    "Alloy Myr",
+    { "colorless", "artifact", "creature", "myr" },
+    3,
+    SMP<ManaPool::COLORLESS, ManaPool::COLORLESS, ManaPool::COLORLESS>(),
+    2,
+    2
+};
+
+void AlloyMyr::tap_for_mana(Game* g, Player* p, ManaPool::Type t) {
+    auto msg = check_tap(g, p);
+    if (msg)
+        throw std::runtime_error(msg);
+    if (sick)
+        throw std::runtime_error("Cannot tap creatures with summoning sickness");
+
+    tapped = true;
+    p->mana += t;
+}
 
 const CardInfo CardMixin<Forest>::info_data = {
     "forest",
@@ -79,3 +103,4 @@ const CardInfo CardMixin<Plains>::info_data = {
     0,
     0
 };
+

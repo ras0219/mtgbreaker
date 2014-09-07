@@ -25,13 +25,11 @@ struct PlayLandAction : Action
 
 struct CastSpell : Action
 {
-    CastSpell(Card* c, struct Stackable* s, std::vector<Card*> m) : card(c), mana(m) {}
+    CastSpell(Card* c, struct Stackable* s) : card(c) {}
 
     virtual const char* check(Game* g, Player* p);
     virtual void enact(Game* g, Player* p);
 
     Card* card;
     struct Stackable* stackable;
-    std::vector<Card*> mana;
-    std::vector<Card*> other;
 };

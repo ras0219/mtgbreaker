@@ -11,7 +11,9 @@ struct Island : LandMixinEx<Island> {};
 struct Plains : LandMixinEx<Plains> {};
 
 struct ChargingBadger : CreatureMixinEx<ChargingBadger> {};
-
 struct WalkingCorpse : CreatureMixinEx<WalkingCorpse> {};
-
 struct TyphoidRats : CreatureMixinEx<TyphoidRats> {};
+
+struct AlloyMyr : CreatureMixinEx<AlloyMyr> {
+    void tap_for_mana(Game* g, Player* p, ManaPool::Type t);
+};

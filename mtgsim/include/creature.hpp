@@ -8,12 +8,12 @@
 template<class Derived, class Base = Card>
 struct CreatureMixin : Base
 {
-    struct CastSpell* cast_from_hand(std::vector<Card*> mana) {
+    struct CastSpell* cast_from_hand() {
         Stackable* stackable = make_stackable(static_cast<Derived*>(this), [](Game* g, Derived* c)
         {
             g->battlefield.push_back(c);
         });
-        return new CastSpell(this, stackable, mana);
+        return new CastSpell(this, stackable);
     }
 };
 

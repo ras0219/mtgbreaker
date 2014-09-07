@@ -33,6 +33,12 @@ struct ManaPool
     static ManaPool parse(const char* cost);
 };
 
+inline ManaPool& operator +=(ManaPool& m, ManaPool::Type t)
+{
+    m[t]++;
+    return m;
+}
+
 namespace impl
 {
     template<unsigned int R, unsigned int G, unsigned int B, unsigned int W, unsigned int U, unsigned int C>
