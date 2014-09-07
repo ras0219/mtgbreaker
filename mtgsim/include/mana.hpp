@@ -1,10 +1,11 @@
 #pragma once
 
 #include <array>
+#include <algorithm>
 
 struct ManaPool
 {
-    ManaPool() : pool{ { 0, 0, 0, 0, 0, 0 } } {}
+    ManaPool() : pool() {}
     ManaPool(std::array<unsigned int, 6> const& arr) : pool(arr) {}
 
     enum Type

@@ -17,5 +17,15 @@ struct PlayerLogic
 
     /// Reorganize P's hand such that the last n cards can be discarded
     virtual void discard(Game* g, Player* p, int n) { }
+
+    /// Declare attackers
+    virtual std::vector<Card*> attack(Game* g, Player* p) { return std::vector<Card*>(); }
+
+    /// Declare blockers
+    /// <return>list of (blocker, attacker)</return>
+    virtual std::vector<std::pair<Card*, Card*>> block(Game* g, Player* p, std::vector<Card*> const& attackers) { return std::vector<std::pair<Card*, Card*>>(); }
+
+    /// Respond to cards
+    virtual struct Response* respond(Game* g, Player* p, struct Choice* ch) { return nullptr; }
 };
 
