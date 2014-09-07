@@ -27,7 +27,7 @@ void Game::play() {
             endstep();
             cleanup();
             // flip the active player
-            active_player = active_player == p1 ? p2 : p1;
+            active_player = next_player();
             turn_number += 1;
         } while (1);
     } catch (Player* p) {
@@ -192,7 +192,7 @@ void Game::block() {
     priority = active_player;
     state = BLOCKERS;
 
-    auto passive_player = active_player == p1 ? p2 : p1;
+    auto passive_player = next_player();
     auto defenders = passive_player->ai->block(this, passive_player);
     // Check cards for blockability
     for (auto a : defenders) {
@@ -228,7 +228,7 @@ void Game::damage() {
             apply_damage(this, a.second, a.first->info().power);
         } else {
             // There isn't a blocker. Hurt 'em plenty.
-            auto passive_player = active_player == p1 ? p2 : p1;
+            auto passive_player = next_player();
             passive_player->apply_damage(a.first->info().power);
         }
     }
