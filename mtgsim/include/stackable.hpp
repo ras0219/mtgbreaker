@@ -35,7 +35,7 @@ struct FunctorSpellStackable : SpellStackable
     FunctorSpellStackable(C* c, F f) : SpellStackable(c), func(std::move(f)) {}
 
     virtual void resolve(struct Game* g) override {
-        func(g, card);
+        func(g, static_cast<C*>(card));
     }
 
     F func;

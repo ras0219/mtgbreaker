@@ -25,7 +25,7 @@ struct PlayLandAction : Action
 
 struct CastSpellAction : Action
 {
-    CastSpellAction(Card* c, struct Stackable* s) : card(c) {}
+    CastSpellAction(Card* c, struct Stackable* s) : card(c), stackable(s) {}
 
     virtual const char* check(Game* g, Player* p);
     virtual void enact(Game* g, Player* p);

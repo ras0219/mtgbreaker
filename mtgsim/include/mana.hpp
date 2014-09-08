@@ -2,9 +2,8 @@
 
 #include <array>
 #include <algorithm>
+#include <iostream>
 
-//this belongs in here
-std::ostream& operator<<(std::ostream& os, const ManaPool& mp);
 
 struct ManaPool
 {
@@ -35,6 +34,8 @@ struct ManaPool
 
     static ManaPool parse(const char* cost);
 };
+
+std::ostream& operator<<(std::ostream& os, const ManaPool& mp); 
 
 inline ManaPool& operator +=(ManaPool& m, ManaPool::Type t)
 {
