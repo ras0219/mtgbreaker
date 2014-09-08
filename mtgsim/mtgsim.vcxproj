@@ -65,7 +65,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AI\brutal_ai.cpp" />
     <ClCompile Include="src\action.cpp" />
+    <ClCompile Include="src\AI\PlayerAI.cpp" />
     <ClCompile Include="src\card.cpp" />
     <ClCompile Include="src\core_card_set.cpp" />
     <ClCompile Include="src\game.cpp" />
@@ -79,6 +81,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\action.hpp" />
+    <ClInclude Include="include\AI\brutal_ai.hpp" />
+    <ClInclude Include="include\AI\playerai.hpp" />
     <ClInclude Include="include\card.hpp" />
     <ClInclude Include="include\core_card_set.hpp" />
     <ClInclude Include="include\creature.hpp" />
