@@ -5,6 +5,7 @@
 #include "core_card_set.hpp"
 #include "playerlogic.hpp"
 #include "player.hpp"
+#include "trogdor.hpp"
 #include <iostream>
 
 Deck deck1 =
@@ -84,9 +85,10 @@ int main() {
     GLOBAL_CARD_LIST.push_back(&ChargingBadger::cardclass_data);
 
     SimplePlayer bp1;
-    SimplePlayer bp2;
+    PlayerLogic* bp2 = make_trogdor_ai();
+    auto& tdeck = make_trogdor_deck();
 
-    Game g(new Player(deck1, &bp1), new Player(deck1, &bp2));
+    Game g(new Player(deck1, &bp1), new Player(tdeck, bp2));
 
     g.play();
     return 0;

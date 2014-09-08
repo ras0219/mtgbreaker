@@ -27,6 +27,7 @@ struct Game
     void resolve_priority();
 
     inline Player* next_player() { return active_player == p1 ? p2 : p1; }
+    inline Player* other_player(Player* me) { return me == p1 ? p2 : p1; }
 
     enum State
     {
