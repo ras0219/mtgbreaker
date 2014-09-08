@@ -33,6 +33,13 @@ ManaPool ManaPool::parse(const char* cost)
     return ret;
 }
 
+//Format: RBWUG1. No endl
+std::ostream& operator<<(std::ostream& os, const ManaPool& mp)
+{
+	os << mp.pool[mp.RED] << mp.pool[mp.BLACK] << mp.pool[mp.WHITE] << mp.pool[mp.BLUE] << mp.pool[mp.GREEN] << mp.pool[mp.COLORLESS];
+	return os;
+
+}
 
 ManaPool& ManaPool::operator-=(ManaPool const& o)
 {

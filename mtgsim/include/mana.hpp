@@ -3,6 +3,9 @@
 #include <array>
 #include <algorithm>
 
+//this belongs in here
+std::ostream& operator<<(std::ostream& os, const ManaPool& mp);
+
 struct ManaPool
 {
     ManaPool() : pool() {}
