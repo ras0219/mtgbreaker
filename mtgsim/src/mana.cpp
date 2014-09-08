@@ -59,3 +59,13 @@ bool ManaPool::operator>=(ManaPool const& o) {
         return false;
     return true;
 }
+
+std::ostream& operator<<(std::ostream& os, const ManaPool& mp) {
+    os << 'C' << mp[ManaPool::COLORLESS];
+    os << 'G' << mp[ManaPool::GREEN];
+    os << 'B' << mp[ManaPool::BLUE];
+    os << 'W' << mp[ManaPool::WHITE];
+    os << 'U' << mp[ManaPool::BLUE];
+    os << 'R' << mp[ManaPool::RED];
+    return os;
+}
