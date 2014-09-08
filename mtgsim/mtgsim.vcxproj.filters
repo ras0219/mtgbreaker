@@ -48,10 +48,10 @@
     <ClCompile Include="src\trogdor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AI\brutal_ai.cpp">
+    <ClCompile Include="src\AI\PlayerAI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\AI\PlayerAI.cpp">
+    <ClCompile Include="src\AI\brutal_ai.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

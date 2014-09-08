@@ -65,8 +65,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AI\brutal_ai.cpp" />
     <ClCompile Include="src\action.cpp" />
+    <ClCompile Include="src\AI\brutal_ai.cpp" />
     <ClCompile Include="src\AI\PlayerAI.cpp" />
     <ClCompile Include="src\card.cpp" />
     <ClCompile Include="src\core_card_set.cpp" />
