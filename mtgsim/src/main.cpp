@@ -7,6 +7,7 @@
 #include "player.hpp"
 #include "trogdor.hpp"
 #include "AI/brutal_ai.hpp"
+#include "AI/playerai.hpp"
 
 #include <iostream>
 
@@ -91,9 +92,9 @@ int main() {
     //PlayerLogic* bp2 = make_trogdor_ai();
     //auto& tdeck = make_trogdor_deck();
 
-	ConsoleAI bp1;
-	BrutalAI bp2;
-    Game g(new Player(deck1, &bp1), new Player(tdeck, bp2));
+	PlayerLogic* bp1 = make_player_AI();
+	PlayerLogic* bp2 = make_brutal_ai();
+    Game g(new Player(deck1, bp1), new Player(deck1, bp2));
 
     g.play();
 	system("pause");

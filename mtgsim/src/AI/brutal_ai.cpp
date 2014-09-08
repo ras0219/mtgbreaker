@@ -4,7 +4,9 @@
 #include "pl_utilities.hpp"
 #include "core_card_set.hpp"
 
+
 struct BrutalAI : PlayerLogic{
+
 	virtual Action* next_action(Game* g, Player* p) override
 	{
 		std::cerr << "Hi! I am id " << (size_t)p << " and I am THE WINNAR! *flip table*" << std::endl;
@@ -13,3 +15,5 @@ struct BrutalAI : PlayerLogic{
 		return nullptr;
 	}
 };
+
+PlayerLogic* make_brutal_ai() { return new BrutalAI(); }

@@ -1,12 +1,12 @@
-#include "playerai.hpp"
+#include "AI/playerai.hpp"
 #include "playerlogic.hpp"
 #include "player.hpp"
 #include "pl_utilities.hpp"
 #include "core_card_set.hpp"
 
 
-
 struct ConsoleAI : PlayerLogic{
+
 	virtual Action* next_action(Game* g, Player* p) override
 	{
 		Player* other_player = ((p == g->p1) ? g->p1 : g->p2);
@@ -38,7 +38,7 @@ struct ConsoleAI : PlayerLogic{
 		do{
 			std::cout << "Select action! Type numberrrrr" << std::endl;
 			std::cin >> action;
-			if (action > i)
+			if (action >= i)
 			{
 				std::cout << "i too large. Try again!" << std::endl;
 				continue;
@@ -66,7 +66,10 @@ struct ConsoleAI : PlayerLogic{
 				std::cout << "lol playing cards hard" << std::endl;
 				continue;
 			}
-		} while (action != i);
+		} while (action != i+1); //pass action
 		return nullptr;
 	}
 };
+
+
+PlayerLogic* make_player_AI() { return new ConsoleAI(); }
