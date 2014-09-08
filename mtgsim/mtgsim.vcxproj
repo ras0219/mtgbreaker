@@ -74,6 +74,8 @@
     <ClCompile Include="src\mana.cpp" />
     <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\playerlogic.cpp" />
+    <ClCompile Include="src\pl_utilities.cpp" />
+    <ClCompile Include="src\trogdor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\action.hpp" />
@@ -85,9 +87,11 @@
     <ClInclude Include="include\mana.hpp" />
     <ClInclude Include="include\player.hpp" />
     <ClInclude Include="include\playerlogic.hpp" />
+    <ClInclude Include="include\pl_utilities.hpp" />
+    <ClInclude Include="include\spell.hpp" />
     <ClInclude Include="include\stackable.hpp" />
+    <ClInclude Include="include\trogdor.hpp" />
     <ClInclude Include="include\utility.hpp" />
-    <ClInclude Include="src\spell.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
