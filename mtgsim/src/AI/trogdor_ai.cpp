@@ -31,7 +31,7 @@ struct TrogdorLogic : PlayerLogicMixin<TrogdorLogic> {
             }
         }
         // no lightning ;(
-
+        std::cerr << "Trogdor pass." << std::endl;
         return nullptr;
     }
 };

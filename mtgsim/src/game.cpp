@@ -8,24 +8,55 @@
 #include <iostream>
 #include <cassert>
 
+void set_mana_zero(Player* p)
+{
+    for (auto& x : p->mana.pool)
+        x = 0;
+}
+
 void Game::play() {
     Player* loser = nullptr;
     try {
         do
         {
             untap();
+            set_mana_zero(p1);
+            set_mana_zero(p2);
             upkeep();
-            if (turn_number != 0)
+            set_mana_zero(p1);
+            set_mana_zero(p2);
+            if (turn_number != 0) {
                 draw();
+                set_mana_zero(p1);
+                set_mana_zero(p2);
+            }
             premain();
+            set_mana_zero(p1);
+            set_mana_zero(p2);
             combegin();
+            set_mana_zero(p1);
+            set_mana_zero(p2);
             attack();
+            set_mana_zero(p1);
+            set_mana_zero(p2);
             block();
+            set_mana_zero(p1);
+            set_mana_zero(p2);
             damage();
+            set_mana_zero(p1);
+            set_mana_zero(p2);
             comend();
+            set_mana_zero(p1);
+            set_mana_zero(p2);
             postmain();
+            set_mana_zero(p1);
+            set_mana_zero(p2);
             endstep();
+            set_mana_zero(p1);
+            set_mana_zero(p2);
             cleanup();
+            set_mana_zero(p1);
+            set_mana_zero(p2);
             // flip the active player
             active_player = next_player();
             turn_number += 1;
@@ -128,8 +159,13 @@ void Game::resolve_priority() {
             stack.pop_back();
             s->resolve(this);
             delete s;
+            passed_players = 0;
         }
-    } while (stack.size() > 0);
+        else
+        {
+            break;
+        }
+    } while (true);
 }
 
 void Game::combegin() {
