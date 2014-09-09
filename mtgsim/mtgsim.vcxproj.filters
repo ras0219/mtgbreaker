@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\AIs">
+      <UniqueIdentifier>{3da83b01-b345-401a-b184-fa5cad81c67e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AIs">
+      <UniqueIdentifier>{f823554e-a4b4-409d-b471-2582bc165254}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Decks">
+      <UniqueIdentifier>{b93a8823-c9f1-494b-ba16-052264cd0f2a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -45,17 +54,23 @@
     <ClCompile Include="src\pl_utilities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\trogdor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\AI\PlayerAI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\AI\brutal_ai.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\burn_set.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AI\scott_ai.cpp">
+      <Filter>Source Files\AIs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AI\trogdor_ai.cpp">
+      <Filter>Source Files\AIs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AI\null_ai.cpp">
+      <Filter>Source Files\AIs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AI\simple_ai.cpp">
+      <Filter>Source Files\AIs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AI\manual_ai.cpp">
+      <Filter>Source Files\AIs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -98,17 +113,35 @@
     <ClInclude Include="include\spell.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\trogdor.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\AI\brutal_ai.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\AI\playerai.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\burn_set.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AI\scott_ai.hpp">
+      <Filter>Header Files\AIs</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AI\trogdor_ai.hpp">
+      <Filter>Header Files\AIs</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AI\null_ai.hpp">
+      <Filter>Header Files\AIs</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AI\simple_ai.hpp">
+      <Filter>Header Files\AIs</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AI\ai.hpp">
+      <Filter>Header Files\AIs</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Deck\simple_deck.hpp">
+      <Filter>Header Files\Decks</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Deck\trogdor_deck.hpp">
+      <Filter>Header Files\Decks</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Deck\deck.hpp">
+      <Filter>Header Files\Decks</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AI\manual_ai.hpp">
+      <Filter>Header Files\AIs</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,9 +1,4 @@
-#include "trogdor.hpp"
-#include "playerlogic.hpp"
-#include "player.hpp"
-#include "pl_utilities.hpp"
-#include "core_card_set.hpp"
-#include "burn_set.hpp"
+#include "AI/ai.hpp"
 
 struct TrogdorLogic : PlayerLogicMixin<TrogdorLogic> {
     Action* precombat_main(Game* g, Player* p) {
@@ -41,39 +36,4 @@ struct TrogdorLogic : PlayerLogicMixin<TrogdorLogic> {
     }
 };
 
-const Deck trogdor_deck =
-{
-    {
-        &Mountain::cardclass_data,
-        &Mountain::cardclass_data,
-        &Mountain::cardclass_data,
-        &Mountain::cardclass_data,
-        &Mountain::cardclass_data,
-        &Mountain::cardclass_data,
-        &Mountain::cardclass_data,
-        &Mountain::cardclass_data,
-        &Mountain::cardclass_data,
-        &Mountain::cardclass_data,
-        &Mountain::cardclass_data,
-        &Mountain::cardclass_data,
-        &Mountain::cardclass_data,
-        &LightningBolt::cardclass_data,
-        &LightningBolt::cardclass_data,
-        &LightningBolt::cardclass_data,
-        &LightningBolt::cardclass_data,
-        &LightningBolt::cardclass_data,
-        &LightningBolt::cardclass_data,
-        &LightningBolt::cardclass_data,
-        &LightningBolt::cardclass_data,
-        &LightningBolt::cardclass_data,
-        &LightningBolt::cardclass_data,
-        &LightningBolt::cardclass_data,
-        &LightningBolt::cardclass_data,
-        &LightningBolt::cardclass_data
-    }
-};
-
 PlayerLogic* make_trogdor_ai() { return new TrogdorLogic(); }
-const Deck& make_trogdor_deck() {
-    return trogdor_deck;
-}
