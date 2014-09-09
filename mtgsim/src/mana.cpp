@@ -37,13 +37,13 @@ ManaPool& ManaPool::operator-=(ManaPool const& o)
 {
     for (auto color : { GREEN, BLACK, BLUE, WHITE, RED })
     {
-        pool[color] -= o.pool[color];
+        pool[color] -= o[color];
     }
     auto cl = o[COLORLESS];
     for (auto color : { GREEN, BLACK, BLUE, WHITE, RED })
     {
         if (cl > 0) {
-            auto x = std::min(o.pool[color], cl);
+            auto x = std::min(pool[color], cl);
             pool[color] -= x;
             cl -= x;
         }
