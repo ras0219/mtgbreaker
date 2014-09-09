@@ -11,18 +11,20 @@
 
 #include <iostream>
 
+#define NUM_GAMES 30
+
 int main() {
     int wins = 0;
-    for (int x = 0; x < 10; ++x) {
+	for (int x = 0; x < NUM_GAMES; ++x) {
         std::cerr << "============================== GAME START" << std::endl;
-        Game g(
-            new Player(trogdor_deck, make_trogdor_ai()),
-            new Player(scott_deck, make_scotts_ai()));
+		Game g(
+			new Player("TROGDOR", trogdor_deck, make_trogdor_ai()),
+			new Player("Scott", scott_deck, make_scotts_ai()));
 
-        g.play();
-        wins += g.loser == g.p2 ? 1 : 0;
+		g.play();
+			wins += g.loser == g.p2 ? 1 : 0;
     }
-    std::cerr << "Trogdor win %: " << (100.0 * wins / 10) << std::endl;
+	std::cerr << "Trogdor win %: " << (100.0 * wins / NUM_GAMES) << std::endl;
 
 	system("pause");
 

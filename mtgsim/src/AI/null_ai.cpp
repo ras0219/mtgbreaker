@@ -4,7 +4,7 @@
 struct NullPlayer : PlayerLogic {
 	virtual Action* next_action(Game* g, Player* p) override
 	{
-		std::cerr << "P" << (size_t)p << "->next_action(" << g->state << ")" << std::endl;
+		std::cerr << p->name << "->next_action(" << g->state << ")" << std::endl;
 		return nullptr;
 	}
 };

@@ -56,7 +56,7 @@ struct TrogdorLogic : PlayerLogicMixin<TrogdorLogic> {
             return nullptr;
 
         for (auto c : p->hand) {
-            std::cerr << "Trogdor[" << (size_t)p << "] hand: " << c->info().id << std::endl;
+			std::cerr << p->name << " has " << c->info().id << std::endl;
         }
 
         return nullptr;
@@ -99,7 +99,7 @@ struct TrogdorLogic : PlayerLogicMixin<TrogdorLogic> {
                 {
                     m->tap_for_mana(g, p);
                 });
-                std::cout << "Trogdor[" << (size_t)p << "] play " << c->info().name << std::endl;
+				std::cout << p->name << " casts " << c->info().name << std::endl;
                 return BurnRecognizer::recognize(g, p, c);
             }
         }
