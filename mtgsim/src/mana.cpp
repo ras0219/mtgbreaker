@@ -35,8 +35,18 @@ ManaPool ManaPool::parse(const char* cost)
 
 ManaPool& ManaPool::operator-=(ManaPool const& o)
 {
-    for (int x = 0; x < 6; ++x) {
-        pool[x] -= o.pool[x];
+    for (auto color : { GREEN, BLACK, BLUE, WHITE, RED })
+    {
+        pool[color] -= o.pool[color];
+    }
+    auto cl = o[COLORLESS];
+    for (auto color : { GREEN, BLACK, BLUE, WHITE, RED })
+    {
+        if (cl > 0) {
+            auto x = std::min(o.pool[color], cl);
+            pool[color] -= x;
+            cl -= x;
+        }
     }
     return *this;
 }
@@ -99,7 +109,7 @@ ManaPool operator+(ManaPool const& a, ManaPool const& b)
 std::ostream& operator<<(std::ostream& os, const ManaPool& mp) {
     os << 'C' << mp[ManaPool::COLORLESS];
     os << 'G' << mp[ManaPool::GREEN];
-    os << 'B' << mp[ManaPool::BLUE];
+    os << 'B' << mp[ManaPool::BLACK];
     os << 'W' << mp[ManaPool::WHITE];
     os << 'U' << mp[ManaPool::BLUE];
     os << 'R' << mp[ManaPool::RED];
