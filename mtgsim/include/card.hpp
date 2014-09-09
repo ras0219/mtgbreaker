@@ -87,6 +87,8 @@ const CardClassImpl<Derived> CardMixin<Derived, Base>::cardclass_data;
 
 struct Deck
 {
+    Deck(std::vector<const CardClass*> const& cl) : cardlist(cl) {}
+
     std::vector<const CardClass*> cardlist;
 
     std::vector<Card*> instance(Player* p) const
@@ -100,6 +102,43 @@ struct Deck
         return cards;
     }
 };
+
+template<unsigned int SZ, class C> struct CX {};
+
+namespace details {
+    template<class...>
+    struct CCHolder;
+
+    template<class...>
+    struct StaticDeckImpl;
+
+    template<class...ccs, class C, class...Args>
+    struct StaticDeckImpl < CCHolder<ccs...>, C, Args... >
+        : StaticDeckImpl < CCHolder<ccs..., C>, Args... >
+    {};
+
+    template<class...ccs, unsigned int SZ, class C, class...Args>
+    struct StaticDeckImpl < CCHolder<ccs...>, CX<SZ, C>, Args... >
+        : StaticDeckImpl < CCHolder<ccs..., C>, CX<SZ-1, C>, Args... >
+    {};
+
+    template<class...ccs, class C, class...Args>
+    struct StaticDeckImpl < CCHolder<ccs...>, CX<0, C>, Args... >
+        : StaticDeckImpl < CCHolder<ccs...>, Args... >
+    {};
+
+    template<class...ccs>
+    struct StaticDeckImpl < CCHolder<ccs...> > {
+        static const Deck value;
+    };
+
+    template<class...ccs>
+    const Deck StaticDeckImpl < CCHolder<ccs...> >::value(std::vector<const CardClass*>{ &ccs::cardclass_data... });
+}
+
+template<class...Args>
+struct StaticDeck : details::StaticDeckImpl<details::CCHolder<>, Args...> {};
+
 
 extern std::vector<const CardClass*> GLOBAL_CARD_LIST;
 

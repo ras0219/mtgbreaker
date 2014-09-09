@@ -41,6 +41,11 @@ struct TrogdorLogic : PlayerLogicMixin<TrogdorLogic> {
     }
 };
 
+const Deck& concise_trogdor_deck = StaticDeck <
+    CX<12, Mountain>,
+    CX<12, LightningBolt>
+>::value;
+
 const Deck trogdor_deck =
 {
     {

@@ -38,7 +38,7 @@ const CardInfo CardMixin<Shock>::info_data = {
 const CardInfo CardMixin<LavaAxe>::info_data = {
     "lavaaxe",
     "Lava Axe",
-    { "red", "instant" },
+    { "red", "sorcery" },
     5,
     ManaPool(std::array<unsigned int, 6>{{4, 0, 0, 0, 0, 1}}),
     0,
@@ -47,4 +47,42 @@ const CardInfo CardMixin<LavaAxe>::info_data = {
 
 void LavaAxe::enact(Game* g, Player* p, Player* target) {
     target->apply_damage(g, 5);
+}
+
+// Lava Spike
+const CardInfo CardMixin<LavaSpike>::info_data = {
+    "lavaaxe",
+    "Lava Axe",
+    { "red", "sorcery", "arcane" },
+    1,
+    ManaPool(std::array<unsigned int, 6>{{0, 0, 0, 0, 0, 1}}),
+    0,
+    0
+};
+
+void LavaSpike::enact(Game* g, Player* p, Player* target) {
+    target->apply_damage(g, 3);
+}
+
+// Searing Blaze
+const CardInfo CardMixin<SearingBlaze>::info_data = {
+    "searingblaze",
+    "Searing Blaze",
+    { "red", "instant", "landfall" },
+    2,
+    ManaPool(std::array<unsigned int, 6>{{0, 0, 0, 0, 0, 2}}),
+    0,
+    0
+};
+
+void SearingBlaze::enact(Game* g, Player* p, Card* ct, Player* pt) {
+    if (g->active_player == p && g->lands_played == 1) {
+        // Landfall effect
+        ct->apply_damage(g, 3);
+        pt->apply_damage(g, 3);
+    } else {
+        // Normal effect
+        ct->apply_damage(g, 1);
+        pt->apply_damage(g, 1);
+    }
 }

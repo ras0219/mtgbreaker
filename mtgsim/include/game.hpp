@@ -54,6 +54,8 @@ struct Game
         return std::find(battlefield.begin(), battlefield.end(), c);
     }
 
+    const char* is_valid_target_creature(Card* c);
+
     int turn_number;
 
     Player* p1;
