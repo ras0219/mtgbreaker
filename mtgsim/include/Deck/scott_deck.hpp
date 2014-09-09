@@ -1,34 +1,7 @@
 
 #pragma once
 
-const Deck scott_deck =
-{
-	{
-		&Forest::cardclass_data,
-		&Forest::cardclass_data,
-		&Forest::cardclass_data,
-		&Forest::cardclass_data,
-		&Forest::cardclass_data,
-		&Forest::cardclass_data,
-		&Forest::cardclass_data,
-		&Forest::cardclass_data,
-		&Forest::cardclass_data,
-		&Forest::cardclass_data,
-		&ChargingBadger::cardclass_data,
-		&ChargingBadger::cardclass_data,
-		&ChargingBadger::cardclass_data,
-		&ChargingBadger::cardclass_data,
-		&ChargingBadger::cardclass_data,
-		&ChargingBadger::cardclass_data,
-		&ChargingBadger::cardclass_data,
-		&ChargingBadger::cardclass_data,
-		&ChargingBadger::cardclass_data,
-		&ChargingBadger::cardclass_data,
-		&ChargingBadger::cardclass_data,
-		&ChargingBadger::cardclass_data,
-		&ChargingBadger::cardclass_data,
-		&ChargingBadger::cardclass_data,
-		&ChargingBadger::cardclass_data,
-		&ChargingBadger::cardclass_data
-	}
-};
+const Deck scott_deck = StaticDeck <
+	CX < 10, Forest >,
+	CX < 15, ChargingBadger >
+> ::value;
