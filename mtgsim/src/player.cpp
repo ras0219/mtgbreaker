@@ -1,12 +1,14 @@
 #include "player.hpp"
 #include "playerlogic.hpp"
 #include "card.hpp"
+#include <ctime>
 #include <iostream>
 
 Player::Player(const std::string name, const Deck& deck, PlayerLogic* l) : loss_pending(false), life(20), ai(l), name(name)
 {
     // Create a new library instance
     library = deck.instance(this);
+	std::srand(unsigned(std::time(0)));
     std::random_shuffle(library.begin(), library.end());
     if (library.size() < 7) {
         throw std::runtime_error("Deck must be at least 7 cards.");

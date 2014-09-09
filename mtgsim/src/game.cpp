@@ -15,7 +15,6 @@ void set_mana_zero(Player* p)
 }
 
 void Game::play() {
-    Player* loser = nullptr;
     try {
         do
         {

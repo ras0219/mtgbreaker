@@ -12,11 +12,17 @@
 #include <iostream>
 
 int main() {
-    Game g(
-		new Player("TROGDOR", trogdor_deck, make_trogdor_ai()),
-		new Player("Scott", scott_deck, make_scotts_ai()));
+    int wins = 0;
+    for (int x = 0; x < 10; ++x) {
+        std::cerr << "============================== GAME START" << std::endl;
+		Game g(
+			new Player("TROGDOR", trogdor_deck, make_trogdor_ai()),
+			new Player("Scott", scott_deck, make_scotts_ai()));
 
-    g.play();
+		g.play();
+			wins += g.loser == g.p2 ? 1 : 0;
+    }
+    std::cerr << "Trogdor win %: " << (100.0 * wins / 10) << std::endl;
 
 	system("pause");
 
