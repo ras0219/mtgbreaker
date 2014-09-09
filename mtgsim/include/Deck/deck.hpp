@@ -7,4 +7,5 @@
 #include "burn_set.hpp"
 
 #include "Deck/simple_deck.hpp"
+#include "Deck/scott_deck.hpp"
 #include "Deck/trogdor_deck.hpp"

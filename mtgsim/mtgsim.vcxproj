@@ -95,6 +95,7 @@
     <ClInclude Include="include\core_card_set.hpp" />
     <ClInclude Include="include\creature.hpp" />
     <ClInclude Include="include\Deck\deck.hpp" />
+    <ClInclude Include="include\Deck\scott_deck.hpp" />
     <ClInclude Include="include\Deck\simple_deck.hpp" />
     <ClInclude Include="include\Deck\trogdor_deck.hpp" />
     <ClInclude Include="include\game.hpp" />

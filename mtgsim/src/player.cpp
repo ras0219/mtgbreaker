@@ -34,3 +34,13 @@ void Player::apply_damage(Game* g, int dmg) {
         loss_pending = true;
     std::cerr << "P" << (size_t)this << " takes " << dmg << " dmg. [" << life << "]" << std::endl;
 }
+
+unsigned int Player::cmc() {
+	return
+		mana[ManaPool::BLACK] +
+		mana[ManaPool::BLUE] +
+		mana[ManaPool::COLORLESS] +
+		mana[ManaPool::GREEN] +
+		mana[ManaPool::RED] +
+		mana[ManaPool::WHITE];
+}

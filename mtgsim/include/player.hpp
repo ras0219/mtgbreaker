@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+
 #include "mana.hpp"
 
 struct Deck;
@@ -21,6 +22,7 @@ struct Player
     bool loss_pending;
     int life;
     ManaPool mana;
+	unsigned int cmc();
 
     PlayerLogic* ai;
 };

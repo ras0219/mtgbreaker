@@ -14,7 +14,7 @@
 int main() {
     Game g(
 		new Player(trogdor_deck, make_trogdor_ai()),
-		new Player(trogdor_deck, make_trogdor_ai()));
+		new Player(scott_deck, make_scotts_ai()));
 
     g.play();
 

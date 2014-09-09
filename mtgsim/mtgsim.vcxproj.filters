@@ -143,5 +143,8 @@
     <ClInclude Include="include\AI\manual_ai.hpp">
       <Filter>Header Files\AIs</Filter>
     </ClInclude>
+    <ClInclude Include="include\Deck\scott_deck.hpp">
+      <Filter>Header Files\Decks</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
