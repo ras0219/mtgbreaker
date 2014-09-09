@@ -62,6 +62,7 @@ struct Game
     Player* p2;
     Player* active_player;
     Player* priority;
+    Player* loser;
     int passed_players;
     int lands_played;
 
