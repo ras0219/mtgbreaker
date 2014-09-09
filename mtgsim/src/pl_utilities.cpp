@@ -58,6 +58,77 @@ void tap_land(Game* g, Player* p, Card* c)
 		return card_cast<Plains>(c)->tap_for_mana(g, p);
 }
 
+std::vector<Card*> tappable_lands(Game* g, Player* p)
+{
+	std::vector<Card*> valids;
+
+	for (auto c : g->battlefield) {
+		if (c->controller != p) continue;
+		if (c->tapped) continue;
+		if (!c->info().has("land")) continue;
+		valids.push_back(c);
+	};
+
+	return valids;
+}
+
+ManaPool::Type type_of_land(Card* c)
+{
+	auto id = c->info().id;
+	if (id == "forest")
+		return ManaPool::GREEN;
+	else if (id == "swamp")
+		return ManaPool::BLACK;
+	else if (id == "mountain")
+		return ManaPool::RED;
+	else if (id == "island")
+		return ManaPool::BLUE;
+	else if (id == "plains")
+		return ManaPool::WHITE;
+	throw std::runtime_error("Not a land");
+}
+
+ManaPool value_of_tappable_lands(Game* g, Player* p)
+{
+	ManaPool value;
+	std::vector<Card*> valids = tappable_lands(g, p);
+
+	for (auto c : valids)
+	{
+		value[type_of_land(c)]++;
+	}
+
+	return value;
+}
+
+bool tap_required_lands(Game* g, Player* p, Card* c)
+{
+	ManaPool empty;
+	ManaPool required = c->info().cost;
+
+	if (required > value_of_tappable_lands(g, p))
+		return false;
+
+	std::vector<Card*> valids = tappable_lands(g, p);
+
+	for (auto it = valids.begin(); it != valids.end(); ++it)
+	{
+		if (required[type_of_land(*it)] > 0)
+		{
+			tap_land(g, p, *it);
+		}
+	}
+	for (auto it = valids.begin(); it != valids.end(); ++it)
+	{
+		if (!(*it)->tapped && required[ManaPool::COLORLESS] > 0)
+		{
+			tap_land(g, p, *it);
+		}
+	}
+	
+	return true;
+}
+
 bool can_play_creature(Game* g, Player* p)
 {
 	return (g->state == Game::PRECOMBAT_MAIN || g->state == Game::POSTCOMBAT_MAIN)
@@ -65,15 +136,17 @@ bool can_play_creature(Game* g, Player* p)
 		&& g->stack.empty();
 }
 
-Card* find_playable_creature_with_attributes(Player* p, std::function<bool(Card*, Card*)> cmp)
+Card* find_playable_creature_with_attributes(Game* g, Player* p, std::function<bool(Card*, Card*)> cmp)
 {
 	std::vector<Card*> &hand = p->hand;
 	std::vector<Card*> valids;
 
-	auto is_valid_playable_creature = [p](Card* c) {
+	ManaPool potential_mana = p->mana + value_of_tappable_lands(g, p);
+
+	auto is_valid_playable_creature = [potential_mana, p](Card* c) {
 		if (c == nullptr) return false;
 		if (!c->info().has("creature")) return false;
-		return p->mana >= c->info().cost;
+		return potential_mana >= c->info().cost;
 	};
 
 	std::copy_if(hand.begin(), hand.end(), std::back_inserter(valids), is_valid_playable_creature);

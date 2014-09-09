@@ -15,25 +15,19 @@ struct ScottAILogic : PlayerLogicMixin<ScottAILogic> {
 			}
 		}
 
-		// Tap ALL my lands.
-		for (auto c : g->battlefield) {
-			if (c->controller != p) continue;
-			if (c->tapped) continue;
-			if (!c->info().has("land")) continue;
-			std::cerr << "P" << (size_t)p << " taps " << c->info().id << std::endl;
-			tap_land(g, p, c);
-		}
-
 		// Find the strongest creature that I have the mana to play.
 		auto strongest_creature = [p](Card* a, Card* b)
 		{
 			return a->info().power < b->info().power;
 		};
-		auto c = find_playable_creature_with_attributes(p, strongest_creature);
+		auto c = find_playable_creature_with_attributes(g, p, strongest_creature);
 
 		// If I have a creature I can play, play it!
 		if (c != nullptr)
 		{
+			// Tap lands required to play the creature.
+			tap_required_lands(g, p, c);
+
 			std::cerr << "P" << (size_t)p << " plays " << c->info().id << std::endl;
 			return play_creature(c);
 		}
@@ -49,6 +43,7 @@ struct ScottAILogic : PlayerLogicMixin<ScottAILogic> {
 			if (c->tapped) continue;
 			if (!c->info().has("creature")) continue;
 			if (c->sick) continue;
+			std::cerr << "P" << (size_t)p << " attacks with " << c->info().id << std::endl;
 			creatures_to_attack_with.push_back(c);
 		}
 

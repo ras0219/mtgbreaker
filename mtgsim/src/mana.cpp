@@ -41,7 +41,16 @@ ManaPool& ManaPool::operator-=(ManaPool const& o)
     return *this;
 }
 
-bool ManaPool::operator>=(ManaPool const& o) {
+ManaPool& ManaPool::operator+=(ManaPool const& o)
+{
+	for (int x = 0; x < 6; ++x) {
+		pool[x] += o.pool[x];
+	}
+	return *this;
+}
+
+bool ManaPool::operator>=(ManaPool const& o) const
+{
     auto colorless = pool[COLORLESS];
 
     for (auto color : { GREEN, BLACK, BLUE, WHITE, RED })
@@ -57,6 +66,34 @@ bool ManaPool::operator>=(ManaPool const& o) {
     if (o[COLORLESS] > colorless)
         return false;
     return true;
+}
+
+bool ManaPool::operator>(ManaPool const& o) const
+{
+	auto colorless = pool[COLORLESS];
+
+	for (auto color : { GREEN, BLACK, BLUE, WHITE, RED })
+	{
+		if (o[color] > pool[color])
+		{
+			return false;
+		}
+		else
+		{
+			colorless += pool[color] - o[color];
+		}
+	}
+	if (o[COLORLESS] >= colorless)
+		return false;
+	return true;
+}
+
+ManaPool operator+(ManaPool const& a, ManaPool const& b)
+{
+	ManaPool ret;
+	ret += a;
+	ret += b;
+	return ret;
 }
 
 std::ostream& operator<<(std::ostream& os, const ManaPool& mp) {

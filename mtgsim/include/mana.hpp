@@ -29,11 +29,15 @@ struct ManaPool
         return pool[sz];
     }
 
-    bool operator>=(ManaPool const& o);
+	bool operator>=(ManaPool const& o) const;
+	bool operator>(ManaPool const& o) const;
+	ManaPool& operator+=(ManaPool const& o);
     ManaPool& operator-=(ManaPool const& o);
 
     static ManaPool parse(const char* cost);
 };
+
+ManaPool operator+(ManaPool const& a, ManaPool const& b);
 
 std::ostream& operator<<(std::ostream& os, const ManaPool& mp); 
 
