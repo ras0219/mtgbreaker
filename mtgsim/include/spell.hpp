@@ -34,6 +34,16 @@ struct SpellMixin : Base
         return new CastSpellAction(this, stackable);
     }
 
+    CastSpellAction* cast_from_hand(Card* ct, Player* pt) {
+        SpellStackable* stackable = make_stackable(static_cast<Derived*>(this), [=](Game* g, Derived* c)
+        {
+            c->enact(g, c->controller, ct, pt);
+        });
+        stackable->p1 = pt;
+        stackable->ct1 = ct;
+        return new CastSpellAction(this, stackable);
+    }
+
 private:
     template<class...Args>
     CastSpellAction* cast_from_hand(Args...args) {

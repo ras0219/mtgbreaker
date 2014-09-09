@@ -89,12 +89,12 @@ int main() {
     GLOBAL_CARD_LIST.push_back(&Forest::cardclass_data);
     GLOBAL_CARD_LIST.push_back(&ChargingBadger::cardclass_data);
 
-    //PlayerLogic* bp2 = make_trogdor_ai();
-    //auto& tdeck = make_trogdor_deck();
+    PlayerLogic* bp2 = make_trogdor_ai();
+    auto& tdeck = make_trogdor_deck();
 
 	PlayerLogic* bp1 = make_player_AI();
-	PlayerLogic* bp2 = make_brutal_ai();
-    Game g(new Player(deck1, bp1), new Player(deck1, bp2));
+
+    Game g(new Player(deck1, bp1), new Player(tdeck, bp2));
 
     g.play();
 	system("pause");

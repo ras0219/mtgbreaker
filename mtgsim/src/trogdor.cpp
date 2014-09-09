@@ -3,6 +3,7 @@
 #include "player.hpp"
 #include "pl_utilities.hpp"
 #include "core_card_set.hpp"
+#include "burn_set.hpp"
 
 struct TrogdorLogic : PlayerLogicMixin<TrogdorLogic> {
     Action* precombat_main(Game* g, Player* p) {
