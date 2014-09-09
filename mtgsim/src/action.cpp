@@ -25,7 +25,7 @@ void PlayLandAction::enact(Game* g, Player* p)
     assert(check(g, p) == nullptr);
     // Remove the land from the player's hand
     auto it = std::find(p->hand.begin(), p->hand.end(), card);
-    std::swap(*it, p->hand.back());
+    std::iter_swap(it, p->hand.end()-1);
     p->hand.pop_back();
 
     // Put it into play
@@ -59,7 +59,7 @@ void CastSpellAction::enact(Game* g, Player* p)
 
     // Remove the card from the player's hand
     auto it = std::find(p->hand.begin(), p->hand.end(), card);
-    std::swap(*it, p->hand.back());
+    std::iter_swap(it, p->hand.end() - 1);
     p->hand.pop_back();
 
     // Pay the cost

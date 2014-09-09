@@ -108,10 +108,10 @@ void kill_card(Game* g, Card* x) {
     auto& b = g->battlefield;
     auto it = std::find(b.begin(), b.end(), x);
     if (it == b.end()) {
-        std::cerr << "WARNING: attempted to kill dead card: " << x->info().id << std::endl;
+        std::cerr << "WARNING: attempted to kill dead card: " << x->info().id << "[" << (size_t)x << "]" << std::endl;
         return;
     }
-    std::swap(b.end() - 1, it);
+    std::iter_swap(b.end() - 1, it);
     b.pop_back();
 
     x->controller = x->owner;
@@ -122,6 +122,7 @@ void kill_card(Game* g, Card* x) {
 
 void Game::resolve_priority() {
     for (auto x : pending_death) {
+        kill_card(this, x);
     }
     pending_death.clear();
 

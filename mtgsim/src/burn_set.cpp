@@ -86,3 +86,26 @@ void SearingBlaze::enact(Game* g, Player* p, Card* ct, Player* pt) {
         pt->apply_damage(g, 1);
     }
 }
+
+// Volcanic Fallout
+const CardInfo CardMixin<VolcanicFallout>::info_data = {
+    "volcanicfallout",
+    "Volcanic Fallout",
+    { "red", "instant" },
+    3,
+    ManaPool(std::array<unsigned int, 6>{{1, 0, 0, 0, 0, 2}}),
+    0,
+    0
+};
+
+void VolcanicFallout::enact(Game* g, Player* p) {
+    g->p1->apply_damage(g, 2);
+    g->p2->apply_damage(g, 2);
+
+    for (auto c : g->battlefield) {
+        if (c->info().has("creature")) {
+            std::cerr << c->info().id << "[" << (size_t)c << "]" << " takes 2" << std::endl;
+            c->apply_damage(g, 2);
+        }
+    }
+}

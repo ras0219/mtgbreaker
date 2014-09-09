@@ -51,6 +51,13 @@ private:
     void enact(Game* g, Player* p, Card* ct, Player* pt);
 };
 
+struct VolcanicFallout : SpellMixinEx < VolcanicFallout > {
+    template<class, class>
+    friend struct SpellMixin;
+private:
+    void enact(Game* g, Player* p);
+};
+
 #if 0
 struct BarbedLightning : SpellMixinEx<BarbedLightning> {
     template<class, class>
