@@ -268,3 +268,11 @@ void Game::cleanup() {
     for (auto c : battlefield)
         c->damage = 0;
 }
+
+const char* Game::is_valid_target_creature(Card* c) {
+    if (!c->info().has("creature"))
+        return "Target is not a creature";
+    if (battlefield.end() == find_in_battlefield(c))
+        return "Target is not in play";
+    return nullptr;
+}
