@@ -11,10 +11,11 @@ struct Game;
 
 struct Player
 {
-    Player(Deck const& deck, PlayerLogic* l);
+    Player(const std::string name, const Deck& deck, PlayerLogic* l);
     void draw(unsigned int n = 1);
     void apply_damage(Game* g, int dmg);
 
+	std::string name;
     std::vector<Card*> library;
     std::vector<Card*> hand;
     std::vector<Card*> graveyard;

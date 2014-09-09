@@ -4,7 +4,7 @@
 struct SimplePlayer : PlayerLogic {
 	virtual Action* next_action(Game* g, Player* p) override
 	{
-		std::cerr << "P" << (size_t)p << "->next_action(" << g->state << ")" << std::endl;
+		std::cerr << p->name << "->next_action(" << g->state << ")" << std::endl;
 		if (g->state == Game::PRECOMBAT_MAIN && g->active_player == p && g->stack.empty())
 		{
 			return main(g, p);
@@ -20,7 +20,7 @@ struct SimplePlayer : PlayerLogic {
 				auto c = *it;
 				auto& i = c->info();
 				if (i.id == "forest") {
-					std::cerr << "P" << (size_t)p << " plays " << i.id << std::endl;
+					std::cerr << p->name << " plays " << i.id << std::endl;
 					return card_cast<Forest>(c)->playland_from_hand();
 				}
 			}

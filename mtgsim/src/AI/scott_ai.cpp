@@ -10,7 +10,7 @@ struct ScottAILogic : PlayerLogicMixin<ScottAILogic> {
 			if (lands.size() > 0)
 			{
 				auto c = lands.front();
-				std::cerr << "P" << (size_t)p << " plays " << c->info().id << std::endl;
+				std::cerr << p->name << " plays " << c->info().id << std::endl;
 				return play_land(c);
 			}
 		}
@@ -28,7 +28,7 @@ struct ScottAILogic : PlayerLogicMixin<ScottAILogic> {
 			// Tap lands required to play the creature.
 			tap_required_lands(g, p, c);
 
-			std::cerr << "P" << (size_t)p << " plays " << c->info().id << std::endl;
+			std::cerr << p->name << " plays " << c->info().id << std::endl;
 			return play_creature(c);
 		}
 
@@ -43,7 +43,7 @@ struct ScottAILogic : PlayerLogicMixin<ScottAILogic> {
 			if (c->tapped) continue;
 			if (!c->info().has("creature")) continue;
 			if (c->sick) continue;
-			std::cerr << "P" << (size_t)p << " attacks with " << c->info().id << std::endl;
+			std::cerr << p->name << " attacks with " << c->info().id << std::endl;
 			creatures_to_attack_with.push_back(c);
 		}
 

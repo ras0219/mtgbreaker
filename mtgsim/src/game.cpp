@@ -65,7 +65,7 @@ void Game::play() {
         loser = p;
     }
 
-    std::cerr << "Player " << (size_t)loser << " loses." << std::endl;
+    std::cerr << loser->name << " loses." << std::endl;
 }
 
 void Game::untap() {
@@ -295,7 +295,7 @@ void Game::cleanup() {
     int diff = p->hand.size() - 7;
     if (diff > 0)
     {
-        std::cerr << "P" << (size_t)p << " is forced to discard." << std::endl;
+        std::cerr << p->name << " is forced to discard." << std::endl;
         // Give player a chance to choose
         p->ai->discard(this, p, diff);
         assert(p->hand.size() >= (size_t)diff);
