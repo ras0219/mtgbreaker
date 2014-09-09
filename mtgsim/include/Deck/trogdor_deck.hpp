@@ -1,34 +1,7 @@
 
 #pragma once
 
-const Deck trogdor_deck =
-{
-	{
-		&Mountain::cardclass_data,
-		&Mountain::cardclass_data,
-		&Mountain::cardclass_data,
-		&Mountain::cardclass_data,
-		&Mountain::cardclass_data,
-		&Mountain::cardclass_data,
-		&Mountain::cardclass_data,
-		&Mountain::cardclass_data,
-		&Mountain::cardclass_data,
-		&Mountain::cardclass_data,
-		&Mountain::cardclass_data,
-		&Mountain::cardclass_data,
-		&Mountain::cardclass_data,
-		&LightningBolt::cardclass_data,
-		&LightningBolt::cardclass_data,
-		&LightningBolt::cardclass_data,
-		&LightningBolt::cardclass_data,
-		&LightningBolt::cardclass_data,
-		&LightningBolt::cardclass_data,
-		&LightningBolt::cardclass_data,
-		&LightningBolt::cardclass_data,
-		&LightningBolt::cardclass_data,
-		&LightningBolt::cardclass_data,
-		&LightningBolt::cardclass_data,
-		&LightningBolt::cardclass_data,
-		&LightningBolt::cardclass_data
-	}
-};
+const Deck trogdor_deck = StaticDeck <
+    CX<16, Mountain>,
+    CX < 24, LightningBolt >
+> ::value;
