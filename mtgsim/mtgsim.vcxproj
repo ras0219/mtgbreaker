@@ -66,8 +66,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\action.cpp" />
-    <ClCompile Include="src\AI\brutal_ai.cpp" />
-    <ClCompile Include="src\AI\PlayerAI.cpp" />
+    <ClCompile Include="src\AI\null_ai.cpp" />
+    <ClCompile Include="src\AI\manual_ai.cpp" />
+    <ClCompile Include="src\AI\scott_ai.cpp" />
+    <ClCompile Include="src\AI\simple_ai.cpp" />
+    <ClCompile Include="src\AI\trogdor_ai.cpp" />
     <ClCompile Include="src\burn_set.cpp" />
     <ClCompile Include="src\card.cpp" />
     <ClCompile Include="src\core_card_set.cpp" />
@@ -78,16 +81,22 @@
     <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\playerlogic.cpp" />
     <ClCompile Include="src\pl_utilities.cpp" />
-    <ClCompile Include="src\trogdor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\action.hpp" />
-    <ClInclude Include="include\AI\brutal_ai.hpp" />
-    <ClInclude Include="include\AI\playerai.hpp" />
+    <ClInclude Include="include\AI\ai.hpp" />
+    <ClInclude Include="include\AI\manual_ai.hpp" />
+    <ClInclude Include="include\AI\null_ai.hpp" />
+    <ClInclude Include="include\AI\scott_ai.hpp" />
+    <ClInclude Include="include\AI\simple_ai.hpp" />
+    <ClInclude Include="include\AI\trogdor_ai.hpp" />
     <ClInclude Include="include\burn_set.hpp" />
     <ClInclude Include="include\card.hpp" />
     <ClInclude Include="include\core_card_set.hpp" />
     <ClInclude Include="include\creature.hpp" />
+    <ClInclude Include="include\Deck\deck.hpp" />
+    <ClInclude Include="include\Deck\simple_deck.hpp" />
+    <ClInclude Include="include\Deck\trogdor_deck.hpp" />
     <ClInclude Include="include\game.hpp" />
     <ClInclude Include="include\land.hpp" />
     <ClInclude Include="include\mana.hpp" />
@@ -96,7 +105,6 @@
     <ClInclude Include="include\pl_utilities.hpp" />
     <ClInclude Include="include\spell.hpp" />
     <ClInclude Include="include\stackable.hpp" />
-    <ClInclude Include="include\trogdor.hpp" />
     <ClInclude Include="include\utility.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

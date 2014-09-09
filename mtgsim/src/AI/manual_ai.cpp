@@ -1,11 +1,7 @@
-#include "AI/playerai.hpp"
-#include "playerlogic.hpp"
-#include "player.hpp"
-#include "pl_utilities.hpp"
-#include "core_card_set.hpp"
 
+#include "AI/ai.hpp"
 
-struct ConsoleAI : PlayerLogic{
+struct ManualAI : PlayerLogic{
 
 	virtual Action* next_action(Game* g, Player* p) override
 	{
@@ -72,4 +68,4 @@ struct ConsoleAI : PlayerLogic{
 };
 
 
-PlayerLogic* make_player_AI() { return new ConsoleAI(); }
+PlayerLogic* make_manual_ai() { return new ManualAI(); }
