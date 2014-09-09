@@ -11,9 +11,11 @@
 
 #include <iostream>
 
+#define NUM_GAMES 30
+
 int main() {
     int wins = 0;
-    for (int x = 0; x < 10; ++x) {
+	for (int x = 0; x < NUM_GAMES; ++x) {
         std::cerr << "============================== GAME START" << std::endl;
 		Game g(
 			new Player("TROGDOR", trogdor_deck, make_trogdor_ai()),
@@ -22,7 +24,7 @@ int main() {
 		g.play();
 			wins += g.loser == g.p2 ? 1 : 0;
     }
-    std::cerr << "Trogdor win %: " << (100.0 * wins / 10) << std::endl;
+	std::cerr << "Trogdor win %: " << (100.0 * wins / NUM_GAMES) << std::endl;
 
 	system("pause");
 

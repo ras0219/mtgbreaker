@@ -56,7 +56,7 @@ struct TrogdorLogic : PlayerLogicMixin<TrogdorLogic> {
             return nullptr;
 
         for (auto c : p->hand) {
-			std::cerr << p->name << " plays " << c->info().id << std::endl;
+			std::cerr << p->name << " has " << c->info().id << std::endl;
         }
 
         return nullptr;
