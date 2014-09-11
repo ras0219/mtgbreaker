@@ -15,6 +15,7 @@ struct Stackable
 struct SpellStackable : Stackable
 {
     SpellStackable(Card* c) : card(c) {}
+    /// All of this is kludge; TODO: find a better way. Probably involving uniquely naming each possible effect.
     virtual Card* card_target1() { return ct1; }
     virtual Card* card_target2() { return ct2; }
     virtual Player* player_target1() { return p1; }

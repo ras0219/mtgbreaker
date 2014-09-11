@@ -16,23 +16,25 @@ struct Card
     virtual ~Card() {}
     virtual const CardInfo& info() const = 0;
     virtual const CardClass& cardclass() const = 0;
-    
-    const char* check_tap(Game* g, Player* p);
+
+    // State queries
+    bool has(const char* attr) const;
+
+    // State modifiers
     void apply_damage(Game* g, int dmg);
 
-    struct Player* owner;
-    struct Player* controller;
+    // Read only state info
+    Player* owner;
+    Player* controller;
     bool tapped;
     bool sick;
     unsigned int damage;
 
 private:
-    std::vector<struct Modifier*> mods;
+    std::vector<struct Modifier*> m_mods;
 };
 
-
-
-
+const char* can_tap(Game* g, Player* p, Card* c);
 extern std::vector<const CardClass*> GLOBAL_CARD_LIST;
 
 template<class C>

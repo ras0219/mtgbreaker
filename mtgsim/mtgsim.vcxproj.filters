@@ -167,5 +167,8 @@
     <ClInclude Include="include\card_info.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\modifier.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

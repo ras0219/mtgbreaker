@@ -45,7 +45,7 @@ const CardInfo CardMixin<AlloyMyr>::info_data = {
 };
 
 void AlloyMyr::tap_for_mana(Game* g, Player* p, ManaPool::Type t) {
-    auto msg = check_tap(g, p);
+    auto msg = can_tap(g, p, this);
     if (msg)
         throw std::runtime_error(msg);
     if (sick)

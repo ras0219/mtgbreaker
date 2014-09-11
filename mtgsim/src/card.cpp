@@ -3,17 +3,23 @@
 #include "game.hpp"
 #include "utility.hpp"
 
-const char* Card::check_tap(Game* g, Player* p) {
+const char* can_tap(Game* g, Player* p, Card* c) {
     auto& bf = g->battlefield;
 
     // Does the player control it?
-    CHECK_RETURN(controller == p);
-    // Is it in play?
-    CHECK_RETURN(std::find(bf.begin(), bf.end(), this) != bf.end());
+    CHECK_RETURN(c->controller == p);
     // Is it not tapped?
-    CHECK_RETURN(!tapped);
+    CHECK_RETURN(!c->tapped);
+    // Is it in play?
+    CHECK_RETURN(std::find(bf.begin(), bf.end(), c) != bf.end());
+    // If it's a creature, is it sick?
+    CHECK_RETURN(!c->info().has("creature") || !c->sick);
 
     return nullptr;
+}
+
+bool Card::has(const char* attr) const {
+    return info().has(attr);
 }
 
 void Card::apply_damage(Game* g, int dmg) {

@@ -108,6 +108,7 @@
     <ClInclude Include="include\deck_static.hpp" />
     <ClInclude Include="include\land.hpp" />
     <ClInclude Include="include\mana.hpp" />
+    <ClInclude Include="include\modifier.hpp" />
     <ClInclude Include="include\player.hpp" />
     <ClInclude Include="include\playerlogic.hpp" />
     <ClInclude Include="include\pl_utilities.hpp" />
