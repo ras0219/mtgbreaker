@@ -72,6 +72,9 @@
     <ClCompile Include="src\AI\manual_ai.cpp">
       <Filter>Source Files\AIs</Filter>
     </ClCompile>
+    <ClCompile Include="src\deck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\game.hpp">
@@ -145,6 +148,24 @@
     </ClInclude>
     <ClInclude Include="include\Deck\scott_deck.hpp">
       <Filter>Header Files\Decks</Filter>
+    </ClInclude>
+    <ClInclude Include="include\card_mixin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\deck.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\deck_static.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\card_class.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\card_class_static.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\card_info.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

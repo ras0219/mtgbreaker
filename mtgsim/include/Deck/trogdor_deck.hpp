@@ -1,7 +1,11 @@
-
 #pragma once
 
-const Deck trogdor_deck = StaticDeck <
+#include "deck.hpp"
+#include "deck_static.hpp"
+#include "core_card_set.hpp"
+#include "burn_set.hpp"
+
+const Deck trogdor_deck = DeckStatic <
     CX < 14, Mountain >,
     CX < 4, LightningBolt >,
     CX < 4, Shock >,

@@ -1,6 +1,7 @@
 #include "player.hpp"
 #include "playerlogic.hpp"
 #include "card.hpp"
+#include "deck.hpp"
 #include <ctime>
 #include <iostream>
 

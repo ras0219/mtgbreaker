@@ -74,6 +74,7 @@
     <ClCompile Include="src\burn_set.cpp" />
     <ClCompile Include="src\card.cpp" />
     <ClCompile Include="src\core_card_set.cpp" />
+    <ClCompile Include="src\deck.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\land.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -92,13 +93,19 @@
     <ClInclude Include="include\AI\trogdor_ai.hpp" />
     <ClInclude Include="include\burn_set.hpp" />
     <ClInclude Include="include\card.hpp" />
+    <ClInclude Include="include\card_class.hpp" />
+    <ClInclude Include="include\card_class_static.hpp" />
+    <ClInclude Include="include\card_info.hpp" />
+    <ClInclude Include="include\card_mixin.hpp" />
     <ClInclude Include="include\core_card_set.hpp" />
     <ClInclude Include="include\creature.hpp" />
+    <ClInclude Include="include\deck.hpp" />
     <ClInclude Include="include\Deck\deck.hpp" />
     <ClInclude Include="include\Deck\scott_deck.hpp" />
     <ClInclude Include="include\Deck\simple_deck.hpp" />
     <ClInclude Include="include\Deck\trogdor_deck.hpp" />
     <ClInclude Include="include\game.hpp" />
+    <ClInclude Include="include\deck_static.hpp" />
     <ClInclude Include="include\land.hpp" />
     <ClInclude Include="include\mana.hpp" />
     <ClInclude Include="include\player.hpp" />

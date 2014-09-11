@@ -1,5 +1,6 @@
-#include "game.hpp"
 #include "action.hpp"
+#include "card_info.hpp"
+#include "game.hpp"
 #include "stackable.hpp"
 #include "player.hpp"
 #include "playerlogic.hpp"

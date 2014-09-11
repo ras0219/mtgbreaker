@@ -2,6 +2,7 @@
 #include "card.hpp"
 #include "player.hpp"
 #include "core_card_set.hpp"
+#include "card_info.hpp"
 #include <algorithm>
 
 bool can_play_land(Game* g, Player* p)

@@ -1,4 +1,5 @@
 #include "burn_set.hpp"
+#include "card_info.hpp"
 #include "player.hpp"
 
 // Lightning Bolt

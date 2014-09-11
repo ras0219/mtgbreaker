@@ -1,4 +1,5 @@
-
+#include "card.hpp"
+#include "card_info.hpp"
 #include "AI/ai.hpp"
 
 struct ScottAILogic : PlayerLogicMixin<ScottAILogic> {

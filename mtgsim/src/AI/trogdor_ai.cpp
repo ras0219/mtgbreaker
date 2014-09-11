@@ -1,4 +1,5 @@
 #include "AI/ai.hpp"
+#include "card_info.hpp"
 #include <unordered_map>
 
 struct BurnRecognizer {

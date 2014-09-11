@@ -4,6 +4,7 @@
 #include "card.hpp"
 #include "action.hpp"
 #include "stackable.hpp"
+#include "card_mixin.hpp"
 
 void tap_for_mana_impl(Game* g, Player* p, Card* c);
 

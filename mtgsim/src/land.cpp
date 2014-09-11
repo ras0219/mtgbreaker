@@ -2,6 +2,7 @@
 #include "mana.hpp"
 #include "utility.hpp"
 #include "player.hpp"
+#include "card_info.hpp"
 
 void gain_mana(Card* c, ManaPool& mpool) {
     auto& i = c->info();

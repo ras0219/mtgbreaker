@@ -11,7 +11,7 @@
 
 #include <iostream>
 
-#define NUM_GAMES 30
+#define NUM_GAMES 10000
 
 int main() {
     int wins = 0;

@@ -1,7 +1,10 @@
-
 #pragma once
 
-const Deck scott_deck = StaticDeck <
+#include "deck.hpp"
+#include "deck_static.hpp"
+#include "core_card_set.hpp"
+
+const Deck scott_deck = DeckStatic <
 	CX < 4, Forest >,
 	CX < 4, ChargingBadger >,
 	CX < 8, Swamp >,

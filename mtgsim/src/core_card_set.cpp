@@ -2,6 +2,7 @@
 #include "utility.hpp"
 #include "game.hpp"
 #include "player.hpp"
+#include "card_info.hpp"
 
 const CardInfo CardMixin<ChargingBadger>::info_data = {
     "chargingbadger",
