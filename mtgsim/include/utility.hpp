@@ -19,3 +19,16 @@
     }
 
 template<class...Args> struct IMulti : Args... {};
+
+#if !defined(_MSC_VER)
+// Really tho, you guys need to get on that
+namespace std {
+    template<bool B>
+    using enable_if_t = typename ::std::enable_if<B>::type;
+
+    template<class T, class...Args>
+    ::std::unique_ptr<T> make_unique(Args&&...args) {
+        return ::std::unique_ptr<T>{new T(::std::forward(args)...)};
+    }
+}
+#endif

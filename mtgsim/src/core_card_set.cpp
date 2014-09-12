@@ -6,6 +6,7 @@
 #include "modifier.hpp"
 #include "modifier_mixin.hpp"
 
+template<>
 const CardInfo CardMixin<ChargingBadger>::info_data = {
     "chargingbadger",
     "Charging Badger",
@@ -17,6 +18,7 @@ const CardInfo CardMixin<ChargingBadger>::info_data = {
     1
 };
 
+template<>
 const CardInfo CardMixin<WalkingCorpse>::info_data = {
     "walkingcorpse",
     "Walking Corpse",
@@ -28,6 +30,7 @@ const CardInfo CardMixin<WalkingCorpse>::info_data = {
     2
 };
 
+template<>
 const CardInfo CardMixin<TyphoidRats>::info_data = {
     "typhoidrats",
     "Typhoid Rats",
@@ -39,6 +42,7 @@ const CardInfo CardMixin<TyphoidRats>::info_data = {
     1
 };
 /////////////////////////////////////
+template<>
 const CardInfo CardMixin<BorderlandMarauder>::info_data = {
     "borderlandmarauder",
     "Borderland Marauder",
@@ -49,15 +53,6 @@ const CardInfo CardMixin<BorderlandMarauder>::info_data = {
     1,
     2
 };
-
-BorderlandMarauder::BorderlandMarauder() : mod{ std::make_unique<BorderlandMarauderModifier>() }
-{
-    add_mod(static_cast<Modifier*>(mod.get()));
-}
-BorderlandMarauder::~BorderlandMarauder()
-{
-    rem_mod(static_cast<Modifier*>(mod.get()));
-}
 
 struct BorderlandMarauderModifier : EndOfTurnModifierMixin<BorderlandMarauderModifier, L7PlusModifier> {
     void end_of_turn(Game* g, Card* c) {
@@ -75,8 +70,18 @@ private:
     int applications = 0;
 };
 
+BorderlandMarauder::BorderlandMarauder() : mod{ std::make_unique<BorderlandMarauderModifier>() }
+{
+    add_mod(static_cast<Modifier*>(mod.get()));
+}
+BorderlandMarauder::~BorderlandMarauder()
+{
+    rem_mod(static_cast<Modifier*>(mod.get()));
+}
+
 /////////////////////////////////////
 
+template<>
 const CardInfo CardMixin<AlloyMyr>::info_data = {
     "alloymyr",
     "Alloy Myr",
@@ -101,6 +106,7 @@ void AlloyMyr::tap_for_mana(Game* g, Player* p, ManaPool::Type t) {
 
 
 /// Lands
+template<>
 const CardInfo CardMixin<Forest>::info_data = {
     "forest",
     "Forest",
@@ -112,6 +118,7 @@ const CardInfo CardMixin<Forest>::info_data = {
     0
 };
 
+template<>
 const CardInfo CardMixin<Swamp>::info_data = {
     "swamp",
     "Swamp",
@@ -123,6 +130,7 @@ const CardInfo CardMixin<Swamp>::info_data = {
     0
 };
 
+template<>
 const CardInfo CardMixin<Mountain>::info_data = {
     "mountain",
     "Mountain",
@@ -134,6 +142,7 @@ const CardInfo CardMixin<Mountain>::info_data = {
     0
 };
 
+template<>
 const CardInfo CardMixin<Island>::info_data = {
     "island",
     "Island",
@@ -145,6 +154,7 @@ const CardInfo CardMixin<Island>::info_data = {
     0
 };
 
+template<>
 const CardInfo CardMixin<Plains>::info_data = {
     "plains",
     "Plains",
@@ -158,6 +168,7 @@ const CardInfo CardMixin<Plains>::info_data = {
 
 //////////////
 
+template<>
 const CardInfo CardMixin<GiantGrowth>::info_data = {
     "giantgrowth",
     "Giant Growth",

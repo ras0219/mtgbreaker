@@ -1,19 +1,16 @@
 #pragma once
 
+#include <stdexcept>
 #include <string>
 #include <vector>
 #include <memory>
 #include "mana.hpp"
 #include "modifier.hpp"
+#include "card_info.hpp"
 
 struct Player;
 struct Game;
-struct CardInfo;
 struct CardClass;
-struct Modifier;
-struct L3Modifier;
-struct L6Modifier;
-struct L7Modifier;
 
 struct Card
 {
@@ -72,5 +69,5 @@ C* card_cast(Card* c) {
     if (c->info().id == C::info_data.id)
         return static_cast<C*>(c);
     else
-        throw std::bad_cast("bad card cast");
+        throw std::runtime_error("bad card cast");
 }

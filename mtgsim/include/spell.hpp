@@ -47,7 +47,7 @@ struct SpellMixin : Base
 private:
     template<class...Args>
     CastSpellAction* cast_from_hand(Args...args) {
-        Stackable* stackable = make_stackable(static_cast<Derived*>(this), [args](Game* g, Derived* c)
+        Stackable* stackable = make_stackable(static_cast<Derived*>(this), [args...](Game* g, Derived* c)
         {
             c->enact(g, c->controller, args...);
         });

@@ -21,4 +21,4 @@ struct CardMixin : Base
 
 
 template<class Derived, class Base>
-const CardClassStatic<Derived> CardMixin<Derived, Base>::cardclass_data;
+const CardClassStatic<Derived> CardMixin<Derived, Base>::cardclass_data{};

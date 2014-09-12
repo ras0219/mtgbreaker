@@ -1,5 +1,6 @@
 #pragma once
 
+#include "utility.hpp"
 #include "card.hpp"
 
 struct SpellStackable;
