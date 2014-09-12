@@ -4,6 +4,7 @@
 #include "card.hpp"
 #include "action.hpp"
 #include "stackable.hpp"
+#include "card_mixin.hpp"
 
 template<class Derived, class Base = Card>
 struct CreatureMixin : Base

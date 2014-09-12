@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include "mana.hpp"
+#include "modifier.hpp"
 
 struct Player;
 struct Game;

@@ -1,5 +1,8 @@
 #pragma once
 
+struct Game;
+struct Card;
+
 enum ternary {
     PASS,
     NO,
@@ -9,9 +12,10 @@ enum ternary {
 struct Modifier {
     virtual ~Modifier() {}
 
-    virtual void end_of_turn(Game* g, Card* c) const { }
-    virtual void destroyed(Game* g, Card* c) const { }
-    virtual void removed_from_play(Game* g, Card* c) const { }
+    virtual void end_of_turn(Game* g, Card* c) { }
+    virtual void destroyed(Game* g, Card* c) { }
+    virtual void removed_from_play(Game* g, Card* c) { }
+    virtual void when_attacks(Game* g, Card* c) { }
 
 protected:
     friend struct Card;

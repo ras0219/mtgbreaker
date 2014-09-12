@@ -14,6 +14,13 @@ struct Plains : LandMixinEx<Plains> {};
 struct ChargingBadger : CreatureMixinEx<ChargingBadger> {};
 struct WalkingCorpse : CreatureMixinEx<WalkingCorpse> {};
 struct TyphoidRats : CreatureMixinEx<TyphoidRats> {};
+struct BorderlandMarauder : CreatureMixinEx<BorderlandMarauder> {
+    BorderlandMarauder();
+    ~BorderlandMarauder();
+
+private:
+    std::unique_ptr<struct BorderlandMarauderModifier> mod;
+};
 
 struct AlloyMyr : CreatureMixinEx<AlloyMyr> {
     void tap_for_mana(Game* g, Player* p, ManaPool::Type t);

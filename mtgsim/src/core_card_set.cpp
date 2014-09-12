@@ -4,6 +4,7 @@
 #include "player.hpp"
 #include "card_info.hpp"
 #include "modifier.hpp"
+#include "modifier_mixin.hpp"
 
 const CardInfo CardMixin<ChargingBadger>::info_data = {
     "chargingbadger",
@@ -37,6 +38,44 @@ const CardInfo CardMixin<TyphoidRats>::info_data = {
     1,
     1
 };
+/////////////////////////////////////
+const CardInfo CardMixin<BorderlandMarauder>::info_data = {
+    "borderlandmarauder",
+    "Borderland Marauder",
+    { "red", "creature", "human", "warrior" },
+    {},
+    2,
+    ManaPool(std::array<unsigned int, 6>{{1, 0, 0, 1, 0, 0}}),
+    1,
+    2
+};
+
+BorderlandMarauder::BorderlandMarauder() : mod{ std::make_unique<BorderlandMarauderModifier>() }
+{
+    add_mod(static_cast<Modifier*>(mod.get()));
+}
+BorderlandMarauder::~BorderlandMarauder()
+{
+    rem_mod(static_cast<Modifier*>(mod.get()));
+}
+
+struct BorderlandMarauderModifier : EndOfTurnModifierMixin<BorderlandMarauderModifier, L7PlusModifier> {
+    void end_of_turn(Game* g, Card* c) {
+        while (applications > 0) {
+            c->rem_mod(static_cast<L7Modifier*>(this));
+            --applications;
+        }
+    }
+    void when_attacks(Game* g, Card* c) {
+        ++applications;
+        c->add_mod(static_cast<L7Modifier*>(this));
+    }
+
+private:
+    int applications = 0;
+};
+
+/////////////////////////////////////
 
 const CardInfo CardMixin<AlloyMyr>::info_data = {
     "alloymyr",

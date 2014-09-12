@@ -17,3 +17,5 @@
     {                \
         return __FILE__ ":" STRINGIFY(__LINE__) ": " #X; \
     }
+
+template<class...Args> struct IMulti : Args... {};

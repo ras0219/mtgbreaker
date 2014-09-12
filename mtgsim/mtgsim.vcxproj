@@ -111,12 +111,16 @@
     <ClInclude Include="include\land.hpp" />
     <ClInclude Include="include\mana.hpp" />
     <ClInclude Include="include\modifier.hpp" />
+    <ClInclude Include="include\modifier_mixin.hpp" />
     <ClInclude Include="include\player.hpp" />
     <ClInclude Include="include\playerlogic.hpp" />
     <ClInclude Include="include\pl_utilities.hpp" />
     <ClInclude Include="include\spell.hpp" />
     <ClInclude Include="include\stackable.hpp" />
     <ClInclude Include="include\utility.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
