@@ -66,6 +66,10 @@ struct BorderlandMarauderModifier : EndOfTurnModifierMixin<BorderlandMarauderMod
         c->add_mod(static_cast<L7Modifier*>(this));
     }
 
+    // L7 stuff
+    int power(int prev) const { return prev + 2; }
+    int toughness(int prev) const { return prev; }
+
 private:
     int applications = 0;
 };
