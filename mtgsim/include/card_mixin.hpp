@@ -21,4 +21,9 @@ struct CardMixin : Base
 
 
 template<class Derived, class Base>
-const CardClassStatic<Derived> CardMixin<Derived, Base>::cardclass_data{};
+const CardClassStatic<Derived> CardMixin<Derived, Base>::cardclass_data
+#if !defined(_MSC_VER)
+// this is why we can't have nice things...
+{}
+#endif
+;
