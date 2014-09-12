@@ -71,6 +71,7 @@
     <ClCompile Include="src\AI\scott_ai.cpp" />
     <ClCompile Include="src\AI\simple_ai.cpp" />
     <ClCompile Include="src\AI\trogdor_ai.cpp" />
+    <ClCompile Include="src\burnrecognizer.cpp" />
     <ClCompile Include="src\burn_set.cpp" />
     <ClCompile Include="src\card.cpp" />
     <ClCompile Include="src\core_card_set.cpp" />
@@ -91,6 +92,7 @@
     <ClInclude Include="include\AI\scott_ai.hpp" />
     <ClInclude Include="include\AI\simple_ai.hpp" />
     <ClInclude Include="include\AI\trogdor_ai.hpp" />
+    <ClInclude Include="include\burnrecognizer.hpp" />
     <ClInclude Include="include\burn_set.hpp" />
     <ClInclude Include="include\card.hpp" />
     <ClInclude Include="include\card_class.hpp" />
