@@ -5,6 +5,7 @@
 #include "player.hpp"
 #include "playerlogic.hpp"
 #include "utility.hpp"
+#include "modifier.hpp"
 #include <algorithm>
 #include <iostream>
 #include <cassert>
@@ -111,11 +112,18 @@ void kill_card(Game* g, Card* x) {
         std::cerr << "WARNING: attempted to kill dead card: " << x->info().id << "[" << (size_t)x << "]" << std::endl;
         return;
     }
+    x->for_each_mod([g, x](Modifier* m) {
+        m->destroyed(g, x);
+    });
     std::iter_swap(b.end() - 1, it);
     b.pop_back();
 
     x->controller = x->owner;
     x->owner->graveyard.push_back(x);
+
+    x->for_each_mod([g, x](Modifier* m) {
+        m->removed_from_play(g, x);
+    });
 
     std::cerr << "Killed card: " << x->info().id << "[" << (size_t)x << "]" << std::endl;
 }
@@ -257,12 +265,12 @@ void Game::damage() {
     for (auto a : atk_blk) {
         if (a.second != nullptr) {
             // There is a blocker. ROUND 1! Fight!
-            a.first->apply_damage(this, a.second->info().power);
-            a.second->apply_damage(this, a.first->info().power);
+            a.first->apply_damage(this, a.second, a.second->power());
+            a.second->apply_damage(this, a.first, a.first->power());
         } else {
             // There isn't a blocker. Hurt 'em plenty.
             auto passive_player = next_player();
-            passive_player->apply_damage(this, a.first->info().power);
+            passive_player->apply_damage(this, a.first, a.first->power());
         }
     }
 
@@ -302,14 +310,18 @@ void Game::cleanup() {
         p->hand.erase(p->hand.end() - diff, p->hand.end());
     }
 
-    for (auto c : battlefield)
+    for (auto c : battlefield) {
         c->damage = 0;
+        c->for_each_mod([this, c](Modifier* m) {
+            m->end_of_turn(this, c);
+        });
+    }
 }
 
 const char* Game::is_valid_target_creature(Card* c) {
-    if (!c->info().has("creature"))
+    if (!c->has_text("creature"))
         return "Target is not a creature";
-    if (battlefield.end() == find_in_battlefield(c))
+    if (!is_in_play(c))
         return "Target is not in play";
     return nullptr;
 }

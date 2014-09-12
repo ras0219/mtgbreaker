@@ -18,3 +18,9 @@ struct TyphoidRats : CreatureMixinEx<TyphoidRats> {};
 struct AlloyMyr : CreatureMixinEx<AlloyMyr> {
     void tap_for_mana(Game* g, Player* p, ManaPool::Type t);
 };
+
+/////////////////////////////////////
+
+struct GiantGrowth : SpellMixinEx<GiantGrowth> {
+    void enact(Game* g, Player* p, Card* tgt);
+};

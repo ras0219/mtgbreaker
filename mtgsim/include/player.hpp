@@ -13,7 +13,7 @@ struct Player
 {
     Player(const std::string name, const Deck& deck, PlayerLogic* l);
     void draw(unsigned int n = 1);
-    void apply_damage(Game* g, int dmg);
+    void apply_damage(Game* g, Card* src, int dmg);
 
 	std::string name;
     std::vector<Card*> library;

@@ -7,6 +7,7 @@ const CardInfo CardMixin<LightningBolt>::info_data = {
     "lightningbolt",
     "Lightning Bolt",
     { "red", "instant" },
+    {},
     1,
     ManaPool(std::array<unsigned int, 6>{{0, 0, 0, 0, 0, 1}}),
     0,
@@ -18,6 +19,7 @@ const CardInfo CardMixin<VolcanicHammer>::info_data = {
     "volcanichammer",
     "Volcanic Hammer",
     { "red", "instant" },
+    {},
     2,
     ManaPool(std::array<unsigned int, 6>{{1, 0, 0, 0, 0, 1}}),
     0,
@@ -29,6 +31,7 @@ const CardInfo CardMixin<Shock>::info_data = {
     "shock",
     "Shock",
     { "red", "instant" },
+    {},
     1,
     ManaPool(std::array<unsigned int, 6>{{0, 0, 0, 0, 0, 1}}),
     0,
@@ -40,6 +43,7 @@ const CardInfo CardMixin<LavaAxe>::info_data = {
     "lavaaxe",
     "Lava Axe",
     { "red", "sorcery" },
+    {},
     5,
     ManaPool(std::array<unsigned int, 6>{{4, 0, 0, 0, 0, 1}}),
     0,
@@ -47,14 +51,15 @@ const CardInfo CardMixin<LavaAxe>::info_data = {
 };
 
 void LavaAxe::enact(Game* g, Player* p, Player* target) {
-    target->apply_damage(g, 5);
+    target->apply_damage(g, this, 5);
 }
 
 // Lava Spike
 const CardInfo CardMixin<LavaSpike>::info_data = {
-    "lavaaxe",
-    "Lava Axe",
+    "lavaspike",
+    "Lava Spike",
     { "red", "sorcery", "arcane" },
+    {},
     1,
     ManaPool(std::array<unsigned int, 6>{{0, 0, 0, 0, 0, 1}}),
     0,
@@ -62,14 +67,15 @@ const CardInfo CardMixin<LavaSpike>::info_data = {
 };
 
 void LavaSpike::enact(Game* g, Player* p, Player* target) {
-    target->apply_damage(g, 3);
+    target->apply_damage(g, this, 3);
 }
 
 // Searing Blaze
 const CardInfo CardMixin<SearingBlaze>::info_data = {
     "searingblaze",
     "Searing Blaze",
-    { "red", "instant", "landfall" },
+    { "red", "instant" },
+    { "landfall" },
     2,
     ManaPool(std::array<unsigned int, 6>{{0, 0, 0, 0, 0, 2}}),
     0,
@@ -79,12 +85,12 @@ const CardInfo CardMixin<SearingBlaze>::info_data = {
 void SearingBlaze::enact(Game* g, Player* p, Card* ct, Player* pt) {
     if (g->active_player == p && g->lands_played == 1) {
         // Landfall effect
-        ct->apply_damage(g, 3);
-        pt->apply_damage(g, 3);
+        ct->apply_damage(g, this, 3);
+        pt->apply_damage(g, this, 3);
     } else {
         // Normal effect
-        ct->apply_damage(g, 1);
-        pt->apply_damage(g, 1);
+        ct->apply_damage(g, this, 1);
+        pt->apply_damage(g, this, 1);
     }
 }
 
@@ -93,6 +99,7 @@ const CardInfo CardMixin<VolcanicFallout>::info_data = {
     "volcanicfallout",
     "Volcanic Fallout",
     { "red", "instant" },
+    {},
     3,
     ManaPool(std::array<unsigned int, 6>{{1, 0, 0, 0, 0, 2}}),
     0,
@@ -100,13 +107,13 @@ const CardInfo CardMixin<VolcanicFallout>::info_data = {
 };
 
 void VolcanicFallout::enact(Game* g, Player* p) {
-    g->p1->apply_damage(g, 2);
-    g->p2->apply_damage(g, 2);
+    g->p1->apply_damage(g, this, 2);
+    g->p2->apply_damage(g, this, 2);
 
     for (auto c : g->battlefield) {
-        if (c->info().has("creature")) {
+        if (c->has_text("creature")) {
             std::cerr << c->info().id << "[" << (size_t)c << "]" << " takes 2" << std::endl;
-            c->apply_damage(g, 2);
+            c->apply_damage(g, this, 2);
         }
     }
 }

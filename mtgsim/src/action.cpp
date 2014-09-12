@@ -42,7 +42,7 @@ const char* CastSpellAction::check(Game* g, Player* p)
     auto it = std::find(p->hand.begin(), p->hand.end(), card);
     CHECK_RETURN(it != p->hand.end());
     auto& info = card->info();
-    if (!info.has("instant"))
+    if (!info.has_text("instant") || !info.has_text("flash"))
     {
         CHECK_RETURN(g->state == Game::PRECOMBAT_MAIN || g->state == Game::POSTCOMBAT_MAIN);
         CHECK_RETURN(g->active_player == p);

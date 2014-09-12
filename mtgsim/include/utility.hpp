@@ -9,7 +9,8 @@
         std::abort(); \
     }
 
-#define STRINGIFY(X) #X
+#define STRINGIFY_EX(X) #X
+#define STRINGIFY(X) STRINGIFY_EX(X)
 
 #define CHECK_RETURN(X)     \
     if (!(X))        \

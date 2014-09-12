@@ -20,7 +20,7 @@ void gain_mana(Card* c, ManaPool& mpool) {
 
 void tap_for_mana_impl(Game* g, Player* p, Card* m)
 {
-    auto msg = can_tap(g, p, m);
+    auto msg = m->can_tap(g, p);
 
     if (msg)
         throw std::runtime_error(msg);

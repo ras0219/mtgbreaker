@@ -52,10 +52,15 @@ struct ManualAI : PlayerLogic{
 				std::cout << "Detailed mana cost:" <<
 					cur_card->info().cost.pool << std::endl;
 				std::cout << "";
-				for (unsigned int i = 0; i < cur_card->info().attrs.size(); i++)
-					std::cout << cur_card->info().attrs.at(i) << " ";
-				std::cout << std::endl;
-				continue;
+
+                for (auto& t : cur_card->info().texts)
+                    std::cout << t << " ";
+                std::cout << std::endl;
+
+                for (auto& t : cur_card->info().abilities)
+                    std::cout << t << " ";
+                std::cout << std::endl;
+                continue;
 			}
 			else//play a card
 			{

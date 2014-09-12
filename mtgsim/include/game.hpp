@@ -50,8 +50,11 @@ struct Game
         CLEANUP
     } state;
 
-    std::vector<Card*>::iterator find_in_battlefield(Card* c) {
+    std::vector<Card*>::iterator find_in_battlefield(const Card* c) {
         return std::find(battlefield.begin(), battlefield.end(), c);
+    }
+    bool is_in_play(const Card* c) {
+        return find_in_battlefield(c) != battlefield.end();
     }
 
     const char* is_valid_target_creature(Card* c);

@@ -34,6 +34,10 @@ Action* BurnRecognizer::play_burn<LavaAxe>(Game* g, Player* p, Card* c) {
     return card_cast<LavaAxe>(c)->cast_from_hand(g->other_player(p));
 }
 template<>
+Action* BurnRecognizer::play_burn<LavaSpike>(Game* g, Player* p, Card* c) {
+    return card_cast<LavaSpike>(c)->cast_from_hand(g->other_player(p));
+}
+template<>
 Action* BurnRecognizer::play_burn<Shock>(Game* g, Player* p, Card* c) {
     return card_cast<Shock>(c)->cast_from_hand(g->other_player(p));
 }
@@ -45,6 +49,7 @@ Action* BurnRecognizer::play_burn<VolcanicFallout>(Game* g, Player* p, Card* c) 
 std::unordered_map<std::string, BurnRecognizer::play_burn_t> BurnRecognizer::playmap =
 {
     { "lavaaxe", BurnRecognizer::play_burn < LavaAxe > },
+    { "lavaspike", BurnRecognizer::play_burn < LavaSpike > },
     { "volcanichammer", BurnRecognizer::play_burn < VolcanicHammer > },
     { "lightningbolt", BurnRecognizer::play_burn < LightningBolt> },
     { "shock", BurnRecognizer::play_burn < Shock > },
@@ -78,6 +83,12 @@ struct TrogdorLogic : PlayerLogicMixin<TrogdorLogic> {
             if (BurnRecognizer::can_recognize(c))
                 burns.push_back(c);
         }
+        auto num_ez_creatures = std::count_if(g->battlefield.begin(), g->battlefield.end(), [](Card* c){
+            return c->has_text("creature") && c->toughness() <= 2;
+        });
+        // Don't use volcanic fallout when there's only 2 creatures out
+        if (num_ez_creatures < 3)
+            burns.erase(std::remove_if(burns.begin(), burns.end(), [](Card* c){ return c->info().id == "volcanicfallout"; }), burns.end());
         if (burns.empty())
             return nullptr;
 

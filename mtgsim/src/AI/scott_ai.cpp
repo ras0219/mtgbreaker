@@ -19,7 +19,7 @@ struct ScottAILogic : PlayerLogicMixin<ScottAILogic> {
 		// Find the strongest creature that I have the mana to play.
 		auto strongest_creature = [p](Card* a, Card* b)
 		{
-			return a->info().power < b->info().power;
+			return a->power() < b->power();
 		};
 		auto c = find_playable_creature_with_attributes(g, p, strongest_creature);
 
@@ -41,9 +41,7 @@ struct ScottAILogic : PlayerLogicMixin<ScottAILogic> {
 		// Find all my creatures and attack with them.
 		for (auto c : g->battlefield) {
 			if (c->controller != p) continue;
-			if (c->tapped) continue;
-			if (!c->info().has("creature")) continue;
-			if (c->sick) continue;
+			if (c->can_attack(g, p) != nullptr) continue;
 			std::cerr << p->name << " attacks with " << c->info().id << std::endl;
 			creatures_to_attack_with.push_back(c);
 		}

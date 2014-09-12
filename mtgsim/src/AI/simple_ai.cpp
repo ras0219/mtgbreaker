@@ -16,7 +16,7 @@ struct SimplePlayer : PlayerLogic {
 		if (g->lands_played == 0)
 		{
 			// Search for lands
-			auto it = std::find_if(p->hand.begin(), p->hand.end(), [](Card* c) { return c->info().has("land"); });
+			auto it = std::find_if(p->hand.begin(), p->hand.end(), [](Card* c) { return c->info().id == "forest"; });
 			if (it != p->hand.end()) {
 				auto c = *it;
 				auto& i = c->info();

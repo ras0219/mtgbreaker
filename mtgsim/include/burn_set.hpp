@@ -14,15 +14,21 @@ struct BurnSpellMixin : Base {
 private:
     void enact(Game* g, Player* p, Card* target)
     {
-        if (!target->info().has("creature"))
-            throw std::runtime_error("Target is not a creature");
-        if (g->battlefield.end() == g->find_in_battlefield(target))
-            throw std::runtime_error("Target is not in play");
-        target->apply_damage(g, DMG);
+        if (!target->has_text("creature"))
+        {
+            std::cerr << "WARNING: Target is not a creature" << std::endl;
+            return;
+        }
+        if (g->is_in_play(target))
+        {
+            std::cerr << "WARNING: Target is not in play" << std::endl;
+            return;
+        }
+        target->apply_damage(g, this, DMG);
     }
     void enact(Game* g, Player* p, Player* target)
     {
-        target->apply_damage(g, DMG);
+        target->apply_damage(g, this, DMG);
     }
 };
 

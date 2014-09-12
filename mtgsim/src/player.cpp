@@ -31,7 +31,7 @@ void Player::draw(unsigned int n) {
     library.erase(it, library.end());
 }
 
-void Player::apply_damage(Game* g, int dmg) {
+void Player::apply_damage(Game* g, Card* src, int dmg) {
     life -= dmg;
     if (life <= 0)
         loss_pending = true;

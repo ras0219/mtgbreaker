@@ -23,7 +23,7 @@ std::vector<Card*> find_lands(Player* p)
     std::vector<Card*> ret;
     ret.reserve(p->hand.size());
     for (auto c : p->hand)
-        if (c->info().has("land"))
+        if (c->info().has_text("land"))
             ret.push_back(c);
     return ret;
 }
@@ -66,7 +66,7 @@ std::vector<Card*> tappable_lands(Game* g, Player* p)
 	for (auto c : g->battlefield) {
 		if (c->controller != p) continue;
 		if (c->tapped) continue;
-		if (!c->info().has("land")) continue;
+		if (!c->has_text("land")) continue;
 		valids.push_back(c);
 	};
 
@@ -146,7 +146,7 @@ Card* find_playable_creature_with_attributes(Game* g, Player* p, std::function<b
 
 	auto is_valid_playable_creature = [potential_mana, p](Card* c) {
 		if (c == nullptr) return false;
-		if (!c->info().has("creature")) return false;
+		if (!c->info().has_text("creature")) return false;
 		return potential_mana >= c->info().cost;
 	};
 
