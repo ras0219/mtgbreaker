@@ -1,3 +1,4 @@
+#include "burn_set.hpp"
 #include "burnrecognizer.hpp"
 
 bool BurnRecognizer::can_recognize(Card* c) {
@@ -12,37 +13,34 @@ Action* BurnRecognizer::recognize(Game* g, Player* p, Card* c) {
 		return it->second(g, p, c);
 }
 
-template<>
-Action* BurnRecognizer::play_burn<LightningBolt>(Game* g, Player* p, Card* c) {
-	return card_cast<LightningBolt>(c)->cast_from_hand(g->other_player(p));
+template<class T> struct is_player_burn : std::false_type {};
+template<class T> struct is_global_burn : std::false_type {};
+
+template<class T>
+std::enable_if_t<is_player_burn<T>::value, Action*> play_burn(Game* g, Player* p, Card* c) {
+    return static_cast<T*>(c)->cast_from_hand(g->other_player(p));
 }
-template<>
-Action* BurnRecognizer::play_burn<VolcanicHammer>(Game* g, Player* p, Card* c) {
-	return card_cast<VolcanicHammer>(c)->cast_from_hand(g->other_player(p));
+template<class T>
+std::enable_if_t<is_global_burn<T>::value, Action*> play_burn(Game* g, Player* p, Card* c) {
+    return static_cast<T*>(c)->cast_from_hand();
 }
-template<>
-Action* BurnRecognizer::play_burn<LavaAxe>(Game* g, Player* p, Card* c) {
-	return card_cast<LavaAxe>(c)->cast_from_hand(g->other_player(p));
-}
-template<>
-Action* BurnRecognizer::play_burn<LavaSpike>(Game* g, Player* p, Card* c) {
-    return card_cast<LavaSpike>(c)->cast_from_hand(g->other_player(p));
-}
-template<>
-Action* BurnRecognizer::play_burn<Shock>(Game* g, Player* p, Card* c) {
-	return card_cast<Shock>(c)->cast_from_hand(g->other_player(p));
-}
-template<>
-Action* BurnRecognizer::play_burn<VolcanicFallout>(Game* g, Player* p, Card* c) {
-	return card_cast<VolcanicFallout>(c)->cast_from_hand();
-}
+
+template<> struct is_player_burn<LavaAxe> : std::true_type{};
+template<> struct is_player_burn<LavaSpike> : std::true_type{};
+template<> struct is_player_burn<LightningBolt> : std::true_type{};
+template<> struct is_player_burn<Shock> : std::true_type{};
+template<> struct is_player_burn<VolcanicHammer> : std::true_type{};
+
+template<> struct is_global_burn<VolcanicFallout> : std::true_type{};
+template<> struct is_global_burn<AngerOfTheGods> : std::true_type{};
 
 std::unordered_map<std::string, BurnRecognizer::play_burn_t> BurnRecognizer::playmap =
 {
-	{ "lavaaxe", BurnRecognizer::play_burn < LavaAxe > },
-    { "lavaspike", BurnRecognizer::play_burn < LavaSpike > },
-    { "volcanichammer", BurnRecognizer::play_burn < VolcanicHammer > },
-	{ "lightningbolt", BurnRecognizer::play_burn < LightningBolt> },
-	{ "shock", BurnRecognizer::play_burn < Shock > },
-	{ "volcanicfallout", BurnRecognizer::play_burn < VolcanicFallout > }
+	{ "lavaaxe", play_burn < LavaAxe > },
+    { "lavaspike", play_burn < LavaSpike > },
+    { "volcanichammer", play_burn < VolcanicHammer > },
+	{ "lightningbolt", play_burn < LightningBolt> },
+	{ "shock", play_burn < Shock > },
+	{ "volcanicfallout", play_burn < VolcanicFallout > },
+    { "angerofthegods", play_burn < AngerOfTheGods > }
 };

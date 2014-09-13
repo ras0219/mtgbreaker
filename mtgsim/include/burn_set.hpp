@@ -4,6 +4,7 @@
 #include "creature.hpp"
 #include "land.hpp"
 #include "spell.hpp"
+#include "player.hpp"
 
 /// Mixin which implements a card with the text:
 /// <Derived> deals <DMG> damage to target creature or player.
