@@ -59,7 +59,7 @@ void Game::play() {
             set_mana_zero(p1);
             set_mana_zero(p2);
             // flip the active player
-            active_player = next_player();
+            std::swap(active_player, passive_player);
             turn_number += 1;
         } while (1);
     } catch (Player* p) {
@@ -128,6 +128,14 @@ void kill_card(Game* g, Card* x) {
     std::cerr << "Killed card: " << x->info().id << "[" << (size_t)x << "]" << std::endl;
 }
 
+void Game::handle_triggered_abilities(Player* p) {
+    if (p->triggered_abilities.empty())
+        return;
+    p->ai->order_triggered_abilities(this, p);
+    stack.insert(stack.end(), p->triggered_abilities.begin(), p->triggered_abilities.end());
+    p->triggered_abilities.clear();
+}
+
 void Game::resolve_priority() {
     for (auto x : pending_death) {
         kill_card(this, x);
@@ -144,22 +152,28 @@ void Game::resolve_priority() {
             }
 
             auto p = priority;
+            // A player is about to receive priority
+            handle_triggered_abilities(active_player);
+            handle_triggered_abilities(passive_player);
+            //
             Action* a = p->ai->next_action(this, p);
             if (a == nullptr)
             {
                 // passed
                 ++passed_players;
                 priority = priority == p1 ? p2 : p1;
-                continue;
             }
-            auto check_res = a->check(this, p);
-            if (check_res != nullptr)
+            else
             {
-                std::cerr << "Someone messed up: " << check_res << std::endl;
-                throw std::runtime_error(check_res);
+                auto check_res = a->check(this, p);
+                if (check_res != nullptr)
+                {
+                    std::cerr << "Someone messed up: " << check_res << std::endl;
+                    throw std::runtime_error(check_res);
+                }
+                a->enact(this, p);
+                passed_players = 0;
             }
-            a->enact(this, p);
-            passed_players = 0;
         }
 
         if (stack.size() > 0)
@@ -227,13 +241,21 @@ void Game::attack() {
     for (auto a : attackers) {
         atk_blk.emplace_back(a, nullptr);
     }
+
+    // Trigger "when X attacks..." here
+    for (auto a : attackers) {
+        a->for_each_mod([this, a](Modifier* m) {
+            m->when_attacks(this, a);
+        });
+    }
+
+    resolve_priority();
 }
 
 void Game::block() {
     priority = active_player;
     state = BLOCKERS;
 
-    auto passive_player = next_player();
     auto defenders = passive_player->ai->block(this, passive_player);
     // Check cards for blockability
     for (auto a : defenders) {
@@ -269,7 +291,6 @@ void Game::damage() {
             a.second->apply_damage(this, a.first, a.first->power());
         } else {
             // There isn't a blocker. Hurt 'em plenty.
-            auto passive_player = next_player();
             passive_player->apply_damage(this, a.first, a.first->power());
         }
     }

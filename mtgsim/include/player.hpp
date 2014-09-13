@@ -8,6 +8,7 @@ struct Deck;
 struct PlayerLogic;
 struct Card;
 struct Game;
+struct Stackable;
 
 struct Player
 {
@@ -26,4 +27,6 @@ struct Player
 	unsigned int cmc();
 
     PlayerLogic* ai;
+
+    std::vector<Stackable*> triggered_abilities;
 };

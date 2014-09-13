@@ -19,7 +19,8 @@ struct BorderlandMarauder : CreatureMixinEx<BorderlandMarauder> {
     ~BorderlandMarauder();
 
 private:
-    std::unique_ptr<struct BorderlandMarauderModifier> mod;
+    friend struct BorderlandMarauderModifier;
+    std::unique_ptr<BorderlandMarauderModifier> mod;
 };
 
 struct AlloyMyr : CreatureMixinEx<AlloyMyr> {

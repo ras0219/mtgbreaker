@@ -27,6 +27,10 @@ struct PlayerLogic
 
     /// Respond to cards
     virtual struct Response* respond(Game* g, Player* p, struct Choice* ch) { return nullptr; }
+
+    /// Order triggered abilities to go onto the stack
+    /// <remark>The triggered abilities vector is found in p->triggered_abilities</remark>
+    virtual void order_triggered_abilities(Game* g, Player* p) { }
 };
 
 template<class Derived, class Base = PlayerLogic>

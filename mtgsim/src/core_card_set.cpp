@@ -54,16 +54,24 @@ const CardInfo CardMixin<BorderlandMarauder>::info_data = {
     2
 };
 
+struct BorderlandMarauderBuffStackable : Stackable {
+    BorderlandMarauderBuffStackable(Card* bm, BorderlandMarauderModifier* l7m) : c(bm), l7(l7m) {}
+
+    void resolve(Game* g);
+
+    Card* c;
+    BorderlandMarauderModifier* l7;
+};
+
 struct BorderlandMarauderModifier : EndOfTurnModifierMixin<BorderlandMarauderModifier, L7PlusModifier> {
     void end_of_turn(Game* g, Card* c) {
         while (applications > 0) {
-            c->rem_mod(static_cast<L7Modifier*>(this));
+            c->rem_l7(this);
             --applications;
         }
     }
     void when_attacks(Game* g, Card* c) {
-        ++applications;
-        c->add_mod(static_cast<L7Modifier*>(this));
+        static_cast<BorderlandMarauder*>(c)->trigger(new BorderlandMarauderBuffStackable{c, this});
     }
 
     // L7 stuff
@@ -73,6 +81,10 @@ struct BorderlandMarauderModifier : EndOfTurnModifierMixin<BorderlandMarauderMod
 private:
     int applications = 0;
 };
+
+void BorderlandMarauderBuffStackable::resolve(Game* g) {
+    c->add_l7(l7);
+}
 
 BorderlandMarauder::BorderlandMarauder() : mod{ std::make_unique<BorderlandMarauderModifier>() }
 {
@@ -184,17 +196,9 @@ const CardInfo CardMixin<GiantGrowth>::info_data = {
     0
 };
 
-struct GiantGrowthModifier : Modifier, L7Modifier {
+struct GiantGrowthModifier : EndOfTurnModifierMixin<GiantGrowthModifier, L7PlusModifier> {
     void end_of_turn(Game* g, Card* c) {
-        c->rem_mod(static_cast<L7Modifier*>(this));
-        pending_removal = true;
-    }
-    void destroyed(Game* g, Card* c) {
-        c->rem_mod(static_cast<L7Modifier*>(this));
-        pending_removal = true;
-    }
-    void removed_from_play(Game* g, Card* c) {
-        c->rem_mod(static_cast<L7Modifier*>(this));
+        c->rem_l7(this);
         pending_removal = true;
     }
 
@@ -210,6 +214,6 @@ void GiantGrowth::enact(Game* g, Player* p, Card* ct) {
 
     auto ggm = new GiantGrowthModifier;
 
-    ct->add_mod(static_cast<Modifier*>(ggm));
-    ct->add_mod(static_cast<L7Modifier*>(ggm));
+    ct->add_mod(ggm);
+    ct->add_l7(ggm);
 }

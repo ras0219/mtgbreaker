@@ -3,6 +3,8 @@
 #include "game.hpp"
 #include "utility.hpp"
 #include "modifier.hpp"
+#include "stackable.hpp"
+#include "player.hpp"
 
 const char* Card::can_tap(Game* g, Player* p) const {
     // Does the player control it?
@@ -19,6 +21,10 @@ const char* Card::can_tap(Game* g, Player* p) const {
 
 void Card::tap(Game*, Player*) {
     tapped = true;
+}
+
+void Card::trigger(Stackable* s) {
+    controller->triggered_abilities.push_back(s);
 }
 
 const char* Card::can_attack(Game* g, Player* p) const {
