@@ -94,6 +94,27 @@ void SearingBlaze::enact(Game* g, Player* p, Card* ct, Player* pt) {
     }
 }
 
+
+// Anger of the Gods
+const CardInfo CardMixin<AngerOfTheGods>::info_data = {
+    "angerofthegods",
+    "Anger of the Gods",
+    { "red", "sorcery" },
+    {},
+    3,
+    ManaPool(std::array<unsigned int, 6>{{1, 0, 0, 0, 0, 2}}),
+    0,
+    0
+};
+
+void AngerOfTheGods::enact(Game* g, Player* p) {
+    for (auto c : g->battlefield) {
+        if (c->has_text("creature")) {
+            c->apply_damage(g, this, 3);
+        }
+    }
+}
+
 // Volcanic Fallout
 const CardInfo CardMixin<VolcanicFallout>::info_data = {
     "volcanicfallout",
@@ -112,7 +133,6 @@ void VolcanicFallout::enact(Game* g, Player* p) {
 
     for (auto c : g->battlefield) {
         if (c->has_text("creature")) {
-            std::cerr << c->info().id << "[" << (size_t)c << "]" << " takes 2" << std::endl;
             c->apply_damage(g, this, 2);
         }
     }
