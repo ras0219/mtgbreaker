@@ -75,17 +75,19 @@
     <ClCompile Include="src\burn_set.cpp" />
     <ClCompile Include="src\card.cpp" />
     <ClCompile Include="src\core_card_set.cpp" />
-    <ClCompile Include="src\deck.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\land.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\mana.cpp" />
+    <ClCompile Include="src\permanent.cpp" />
     <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\playerlogic.cpp" />
     <ClCompile Include="src\pl_utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\action.hpp" />
+    <ClInclude Include="include\activated_ability.hpp" />
+    <ClInclude Include="include\activated_ability_mixin.hpp" />
     <ClInclude Include="include\AI\ai.hpp" />
     <ClInclude Include="include\AI\manual_ai.hpp" />
     <ClInclude Include="include\AI\null_ai.hpp" />
@@ -95,13 +97,10 @@
     <ClInclude Include="include\burnrecognizer.hpp" />
     <ClInclude Include="include\burn_set.hpp" />
     <ClInclude Include="include\card.hpp" />
-    <ClInclude Include="include\card_class.hpp" />
-    <ClInclude Include="include\card_class_static.hpp" />
-    <ClInclude Include="include\card_info.hpp" />
     <ClInclude Include="include\card_mixin.hpp" />
+    <ClInclude Include="include\core_activated_abilities.hpp" />
     <ClInclude Include="include\core_card_set.hpp" />
     <ClInclude Include="include\creature.hpp" />
-    <ClInclude Include="include\deck.hpp" />
     <ClInclude Include="include\Deck\deck.hpp" />
     <ClInclude Include="include\Deck\scott_deck.hpp" />
     <ClInclude Include="include\Deck\simple_deck.hpp" />
@@ -112,15 +111,13 @@
     <ClInclude Include="include\mana.hpp" />
     <ClInclude Include="include\modifier.hpp" />
     <ClInclude Include="include\modifier_mixin.hpp" />
+    <ClInclude Include="include\permanent.hpp" />
     <ClInclude Include="include\player.hpp" />
     <ClInclude Include="include\playerlogic.hpp" />
     <ClInclude Include="include\pl_utilities.hpp" />
     <ClInclude Include="include\spell.hpp" />
     <ClInclude Include="include\stackable.hpp" />
     <ClInclude Include="include\utility.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

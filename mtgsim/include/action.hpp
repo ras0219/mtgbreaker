@@ -13,23 +13,13 @@ struct Action
     virtual void enact(Game* g, Player* p) = 0;
 };
 
-struct PlayLandAction : Action
-{
-    PlayLandAction(Card* c) : card(c) {}
-
-    virtual const char* check(Game* g, Player* p);
-    virtual void enact(Game* g, Player* p);
-
-    Card* card;
-};
-
 struct CastSpellAction : Action
 {
-    CastSpellAction(Card* c, struct Stackable* s) : card(c), stackable(s) {}
+    CastSpellAction(const Card* c, struct Stackable* s) : card(c), stackable(s) {}
 
     virtual const char* check(Game* g, Player* p);
     virtual void enact(Game* g, Player* p);
 
-    Card* card;
+    const Card* card;
     struct Stackable* stackable;
 };

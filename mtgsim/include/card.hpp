@@ -3,76 +3,35 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
-#include <memory>
 #include "mana.hpp"
-#include "modifier.hpp"
-#include "card_info.hpp"
-
-struct Player;
-struct Game;
-struct CardClass;
-struct Stackable;
 
 struct Card
 {
-    Card(Player* p = nullptr) : owner(p), controller(p), tapped(false), sick(true), damage(0) {}
-    virtual ~Card() {}
-    virtual const CardInfo& info() const = 0;
-    virtual const CardClass& cardclass() const = 0;
+    /// Read-only card information
+public:
+    std::string name;
+    std::vector<std::string> texts;
+    std::vector<std::string> abilities;
 
-    // State queries
-    bool has_text(const char* attr) const;
-    bool has_ability(const char* attr) const;
-    int power() const;
-    int toughness() const;
-    const char* can_tap(Game* g, Player* p) const;
-    const char* can_attack(Game* g, Player* p) const;
+    /// converted mana cost
+    unsigned int cmc;
+    /// mana cost
+    ManaPool cost;
 
-    // State modifiers
-    void apply_damage(Game* g, Card* src, int dmg);
-    void tap(Game* g, Player* p);
-    void untap(Game* g, Player* p);
+    unsigned int power;
+    unsigned int toughness;
 
-    void add_mod(Modifier* m) { m_mods.push_back(m); }
-    void add_l3(L3Modifier* m) { m_l3.push_back(m); }
-    void add_l6(L6Modifier* m) { m_l6.push_back(m); }
-    void add_l7(L7Modifier* m) { m_l7.push_back(m); }
-
-    void rem_mod(Modifier* m) { m_mods.erase(std::remove(m_mods.begin(), m_mods.end(), m)); }
-    void rem_l3(L3Modifier* m) { m_l3.erase(std::remove(m_l3.begin(), m_l3.end(), m)); }
-    void rem_l6(L6Modifier* m) { m_l6.erase(std::remove(m_l6.begin(), m_l6.end(), m)); }
-    void rem_l7(L7Modifier* m) { m_l7.erase(std::remove(m_l7.begin(), m_l7.end(), m)); }
-
-    // Read only state info
-    Player* owner;
-    Player* controller;
-    bool tapped;
-    bool sick;
-    unsigned int damage;
-
-    template<class F>
-    void for_each_mod(F f) {
-        for (auto m : m_mods)
-            f(m);
-        auto it = std::partition(m_mods.begin(), m_mods.end(), [](Modifier* m) { return !m->pending_removal; });
-        std::for_each(it, m_mods.end(), [](Modifier* m){ delete m; });
-        m_mods.erase(it, m_mods.end());
-    }
-
-protected:
-    void trigger(Stackable* s);
-
-protected:
-    std::vector<struct Modifier*> m_mods;
-    std::vector<struct L3Modifier*> m_l3;
-    std::vector<struct L6Modifier*> m_l6;
-    std::vector<struct L7Modifier*> m_l7;
+    /// Utility functions
+public:
+    bool has_text(const char* text) const;
+    bool has_ability(const char* ab) const;
 };
 
 template<class C>
-C* card_cast(Card* c) {
-    if (c->info().id == C::info_data.id)
-        return static_cast<C*>(c);
+const C* card_cast(const Card* c) {
+    static_assert(std::is_base_of<Card, C>::value, "Cannot cast to non-card");
+    if (c == &C::instance)
+        return &C::instance;
     else
         throw std::runtime_error("bad card cast");
 }

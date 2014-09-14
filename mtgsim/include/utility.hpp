@@ -32,3 +32,15 @@ namespace std {
     }
 }
 #endif
+
+namespace nstd {
+    template<class T, class U>
+    bool unstable_erase_first(std::vector<T*>& v, U* t) {
+        auto it = std::find(v.begin(), v.end(), t);
+        if (it == v.end())
+            return false;
+        std::iter_swap(it, v.end() - 1);
+        v.pop_back();
+        return true;
+    }
+}

@@ -1,13 +1,17 @@
 #pragma once
 
-#include "card.hpp"
+#include <vector>
 #include "mana.hpp"
 
+struct Player;
 struct PlayerLogic;
+struct Card;
+struct Permanent;
+struct Stackable;
 
 struct Game
 {
-    Game(Player* p1_, Player* p2_) : state(PRECOMBAT_MAIN), turn_number(0), p1(p1_), p2(p2_), active_player(p1), passive_player(p2), priority(p1), passed_players(0), lands_played(0) {}
+    Game(Player* p1_, Player* p2_) : state(UNTAP), turn_number(0), p1(p1_), p2(p2_), active_player(p1), passive_player(p2), priority(p1), passed_players(0), lands_played(0) {}
 
     void play();
 
@@ -49,13 +53,16 @@ struct Game
         CLEANUP
     } state;
 
-    std::vector<Card*>::iterator find_in_battlefield(const Card* c) {
+    std::vector<Permanent*>::iterator find_in_battlefield(Permanent* c) {
         return std::find(battlefield.begin(), battlefield.end(), c);
     }
-    bool is_in_play(const Card* c) {
-        return find_in_battlefield(c) != battlefield.end();
+    std::vector<Permanent*>::const_iterator find_in_battlefield(const Permanent* c) {
+        return std::find(battlefield.cbegin(), battlefield.cend(), c);
     }
-    const char* is_valid_target_creature(Card* c);
+    bool is_in_play(const Permanent* c) {
+        return find_in_battlefield(c) != battlefield.cend();
+    }
+    const char* is_valid_target_creature(Permanent* c);
 
     void handle_triggered_abilities(Player* p);
 
@@ -73,9 +80,9 @@ struct Game
     int lands_played;
 
     std::vector<Card*> exile;
-    std::vector<Card*> battlefield;
+    std::vector<struct Permanent*> battlefield;
     std::vector<struct Stackable*> stack;
 
-    std::vector<std::pair<Card*, Card*>> atk_blk;
-    std::vector<Card*> pending_death;
+    std::vector<std::pair<Permanent*, Permanent*>> atk_blk;
+    std::vector<struct Permanent*> pending_death;
 };

@@ -2,24 +2,22 @@
 #include "utility.hpp"
 #include "game.hpp"
 #include "player.hpp"
-#include "card_info.hpp"
 #include "modifier.hpp"
 #include "modifier_mixin.hpp"
 
-template<>
-const CardInfo CardMixin<ChargingBadger>::info_data = {
-    "chargingbadger",
-    "Charging Badger",
-    { "green", "creature", "badger" },
-    { "trample" },
-    1,
-    ManaPool(std::array<unsigned int, 6>{{0, 1, 0, 0, 0, 0}}),
-    1,
-    1
+CardMixin<ChargingBadger>::CardMixin() {
+    name = "Charging Badger";
+    texts = { "green", "creature", "badger" };
+    abilities = { "trample" };
+    cmc = 1;
+    cost = ManaPool(std::array < unsigned int, 6 > {{0, 1, 0, 0, 0, 0}});
+    power = 1;
+    toughness = 1;
 };
 
+#if 0
 template<>
-const CardInfo CardMixin<WalkingCorpse>::info_data = {
+const WalkingCorpse CardMixin<WalkingCorpse>::instance = Card{
     "walkingcorpse",
     "Walking Corpse",
     { "black", "creature", "zombie" },
@@ -31,7 +29,7 @@ const CardInfo CardMixin<WalkingCorpse>::info_data = {
 };
 
 template<>
-const CardInfo CardMixin<TyphoidRats>::info_data = {
+const TyphoidRats CardMixin<TyphoidRats>::instance = {
     "typhoidrats",
     "Typhoid Rats",
     { "black", "creature", "rat" },
@@ -43,7 +41,7 @@ const CardInfo CardMixin<TyphoidRats>::info_data = {
 };
 /////////////////////////////////////
 template<>
-const CardInfo CardMixin<BorderlandMarauder>::info_data = {
+const BorderlandMarauder CardMixin<BorderlandMarauder>::instance = {
     "borderlandmarauder",
     "Borderland Marauder",
     { "red", "creature", "human", "warrior" },
@@ -98,7 +96,7 @@ BorderlandMarauder::~BorderlandMarauder()
 /////////////////////////////////////
 
 template<>
-const CardInfo CardMixin<AlloyMyr>::info_data = {
+const AlloyMyr CardMixin<AlloyMyr>::instance = {
     "alloymyr",
     "Alloy Myr",
     { "colorless", "artifact", "creature", "myr" },
@@ -120,84 +118,61 @@ void AlloyMyr::tap_for_mana(Game* g, Player* p, ManaPool::Type t) {
     p->mana += t;
 }
 
-
+#endif
 /// Lands
-template<>
-const CardInfo CardMixin<Forest>::info_data = {
-    "forest",
-    "Forest",
-    { "colorless", "land", "basicland" },
-    {},
-    0,
-    SMP<>(),
-    0,
-    0
+CardMixin<Forest>::CardMixin() {
+    name = "Forest";
+    texts = { "colorless", "land", "basicland" };
+    cmc = 0;
+    power = 0;
+    toughness = 0;
 };
 
-template<>
-const CardInfo CardMixin<Swamp>::info_data = {
-    "swamp",
-    "Swamp",
-    { "colorless", "land", "basicland" },
-    {},
-    0,
-    SMP<>(),
-    0,
-    0
+CardMixin<Mountain>::CardMixin() {
+    name = "Mountain";
+    texts = { "colorless", "land", "basicland" };
+    cmc = 0;
+    power = 0;
+    toughness = 0;
 };
 
-template<>
-const CardInfo CardMixin<Mountain>::info_data = {
-    "mountain",
-    "Mountain",
-    { "colorless", "land", "basicland" },
-    {},
-    0,
-    SMP<>(),
-    0,
-    0
+CardMixin<Swamp>::CardMixin() {
+    name = "Swamp";
+    texts = { "colorless", "land", "basicland" };
+    cmc = 0;
+    power = 0;
+    toughness = 0;
 };
 
-template<>
-const CardInfo CardMixin<Island>::info_data = {
-    "island",
-    "Island",
-    { "colorless", "land", "basicland" },
-    {},
-    0,
-    SMP<>(),
-    0,
-    0
+CardMixin<Plains>::CardMixin() {
+    name = "Plains";
+    texts = { "colorless", "land", "basicland" };
+    cmc = 0;
+    power = 0;
+    toughness = 0;
 };
 
-template<>
-const CardInfo CardMixin<Plains>::info_data = {
-    "plains",
-    "Plains",
-    { "colorless", "land", "basicland" },
-    {},
-    0,
-    SMP<>(),
-    0,
-    0
+CardMixin<Island>::CardMixin() {
+    name = "Island";
+    texts = { "colorless", "land", "basicland" };
+    cmc = 0;
+    power = 0;
+    toughness = 0;
 };
 
 //////////////
 
-template<>
-const CardInfo CardMixin<GiantGrowth>::info_data = {
-    "giantgrowth",
-    "Giant Growth",
-    { "green", "instant" },
-    {},
-    1,
-    ManaPool(std::array<unsigned int, 6>{{0, 1, 0, 0, 0, 0}}),
-    0,
-    0
+CardMixin<GiantGrowth>::CardMixin() {
+    name = "Giant Growth";
+    texts = { "green", "instant" };
+    cmc = 1;
+    cost = ManaPool(std::array < unsigned int, 6 > {{0, 1, 0, 0, 0, 0}});
+    power = 0;
+    toughness = 0;
 };
 
 struct GiantGrowthModifier : EndOfTurnModifierMixin<GiantGrowthModifier, L7PlusModifier> {
-    void end_of_turn(Game* g, Card* c) {
+    void end_of_turn(Game* g, Permanent* c) {
         c->rem_l7(this);
         pending_removal = true;
     }
@@ -206,7 +181,7 @@ struct GiantGrowthModifier : EndOfTurnModifierMixin<GiantGrowthModifier, L7PlusM
     int toughness(int prev) const { return prev + 3; }
 };
 
-void GiantGrowth::enact(Game* g, Player* p, Card* ct) {
+void GiantGrowth::enact(Game* g, Player* p, Permanent* ct) {
     if (!ct->has_text("creature")) {
         std::cerr << "WARNING: giant growth cast on non-creature" << std::endl;
         return;

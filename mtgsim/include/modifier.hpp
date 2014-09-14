@@ -12,13 +12,13 @@ enum ternary {
 struct Modifier {
     virtual ~Modifier() {}
 
-    virtual void end_of_turn(Game* g, Card* c) { }
-    virtual void destroyed(Game* g, Card* c) { }
-    virtual void removed_from_play(Game* g, Card* c) { }
-    virtual void when_attacks(Game* g, Card* c) { }
+    virtual void end_of_turn(Game* g, Permanent* c) { }
+    virtual void destroyed(Game* g, Permanent* c) { }
+    virtual void removed_from_play(Game* g, Permanent* c) { }
+    virtual void when_attacks(Game* g, Permanent* c) { }
 
 protected:
-    friend struct Card;
+    friend struct Permanent;
     bool pending_removal = false;
 };
 

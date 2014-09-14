@@ -2,30 +2,19 @@
 #include "mana.hpp"
 #include "utility.hpp"
 #include "player.hpp"
-#include "card_info.hpp"
+#include "permanent.hpp"
+#include "core_card_set.hpp"
 
-void gain_mana(Card* c, ManaPool& mpool) {
-    auto& i = c->info();
-    if (i.id == "forest")
-        mpool[ManaPool::GREEN]++;
-    else if (i.id == "plains")
-        mpool[ManaPool::WHITE]++;
-    else if (i.id == "swamp")
-        mpool[ManaPool::BLACK]++;
-    else if (i.id == "island")
-        mpool[ManaPool::BLUE]++;
-    else if (i.id == "mountain")
-        mpool[ManaPool::RED]++;
-}
+namespace detail {
+    void tap_for_mana_impl(Game* g, Player* p, Permanent* m, ManaPool::Type t)
+    {
+        auto msg = m->can_tap(g, p);
 
-void tap_for_mana_impl(Game* g, Player* p, Card* m)
-{
-    auto msg = m->can_tap(g, p);
+        if (msg)
+            throw std::runtime_error(msg);
 
-    if (msg)
-        throw std::runtime_error(msg);
+        ++p->mana[t];
 
-    gain_mana(m, p->mana);
-
-    m->tapped = true;
+        m->tapped = true;
+    }
 }

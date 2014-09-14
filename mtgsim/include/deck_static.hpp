@@ -1,6 +1,6 @@
 #pragma once
 
-#include "deck.hpp"
+using Deck = std::vector<const Card*>;
 
 template<unsigned int SZ, class C> struct CX {};
 
@@ -32,7 +32,7 @@ namespace details {
     };
 
     template<class...ccs>
-    const Deck StaticDeckImpl < CCHolder<ccs...> >::value(std::vector<const CardClass*>{ &ccs::cardclass_data... });
+    const Deck StaticDeckImpl < CCHolder<ccs...> >::value = { &ccs::instance... };
 }
 
 template<class...Args>

@@ -1,20 +1,18 @@
 #include "player.hpp"
 #include "playerlogic.hpp"
 #include "card.hpp"
-#include "deck.hpp"
 #include <ctime>
 #include <iostream>
 
-Player::Player(const std::string name, const Deck& deck, PlayerLogic* l) : loss_pending(false), life(20), ai(l), name(name)
+Player::Player(const std::string name, std::vector<const Card*> deck, PlayerLogic* l) : loss_pending(false), life(20), ai(l), name(name), library(std::move(deck))
 {
-    // Create a new library instance
-    library = deck.instance(this);
+    // Shuffle the library
 	std::srand(unsigned(std::time(0)));
     std::random_shuffle(library.begin(), library.end());
     if (library.size() < 7) {
         throw std::runtime_error("Deck must be at least 7 cards.");
     }
-    // Move the top 7 cards into the hand
+    // Move the top 7 cards into hand
     draw(7);
 }
 
@@ -31,11 +29,18 @@ void Player::draw(unsigned int n) {
     library.erase(it, library.end());
 }
 
-void Player::apply_damage(Game* g, Card* src, int dmg) {
+void Player::apply_damage(Game* g, const Card* src, int dmg) {
     life -= dmg;
     if (life <= 0)
         loss_pending = true;
 	std::cerr << this->name << " takes " << dmg << " dmg. [" << life << "]" << std::endl;
+}
+
+void Player::apply_damage(Game* g, Permanent* src, int dmg) {
+    life -= dmg;
+    if (life <= 0)
+        loss_pending = true;
+    std::cerr << this->name << " takes " << dmg << " dmg. [" << life << "]" << std::endl;
 }
 
 unsigned int Player::cmc() {

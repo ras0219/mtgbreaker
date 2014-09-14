@@ -5,6 +5,7 @@
 struct Game;
 struct Player;
 struct Card;
+struct Permanent;
 
 struct PlayerLogic
 {
@@ -19,11 +20,11 @@ struct PlayerLogic
     virtual void discard(Game* g, Player* p, int n) { }
 
     /// Declare attackers
-    virtual std::vector<Card*> attack(Game* g, Player* p) { return std::vector<Card*>(); }
+    virtual std::vector<Permanent*> attack(Game* g, Player* p) { return std::vector<Permanent*>(); }
 
     /// Declare blockers
     /// <return>list of (blocker, attacker)</return>
-    virtual std::vector<std::pair<Card*, Card*>> block(Game* g, Player* p) { return std::vector<std::pair<Card*, Card*>>(); }
+    virtual std::vector<std::pair<Permanent*, Permanent*>> block(Game* g, Player* p) { return std::vector<std::pair<Permanent*, Permanent*>>(); }
 
     /// Respond to cards
     virtual struct Response* respond(Game* g, Player* p, struct Choice* ch) { return nullptr; }

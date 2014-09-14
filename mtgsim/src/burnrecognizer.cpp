@@ -1,12 +1,12 @@
 #include "burn_set.hpp"
 #include "burnrecognizer.hpp"
 
-bool BurnRecognizer::can_recognize(Card* c) {
-	return playmap.find(c->info().id) != playmap.end();
+bool BurnRecognizer::can_recognize(const Card* c) {
+	return playmap.find(c) != playmap.end();
 }
 
-Action* BurnRecognizer::recognize(Game* g, Player* p, Card* c) {
-	auto it = playmap.find(c->info().id);
+Action* BurnRecognizer::recognize(Game* g, Player* p, const Card* c) {
+	auto it = playmap.find(c);
 	if (it == playmap.end())
 		return nullptr;
 	else
@@ -17,12 +17,12 @@ template<class T> struct is_player_burn : std::false_type {};
 template<class T> struct is_global_burn : std::false_type {};
 
 template<class T>
-std::enable_if_t<is_player_burn<T>::value, Action*> play_burn(Game* g, Player* p, Card* c) {
-    return static_cast<T*>(c)->cast_from_hand(g->other_player(p));
+std::enable_if_t<is_player_burn<T>::value, Action*> play_burn(Game* g, Player* p, const Card* c) {
+    return static_cast<const T*>(c)->cast_from_hand(p, g->other_player(p));
 }
 template<class T>
-std::enable_if_t<is_global_burn<T>::value, Action*> play_burn(Game* g, Player* p, Card* c) {
-    return static_cast<T*>(c)->cast_from_hand();
+std::enable_if_t<is_global_burn<T>::value, Action*> play_burn(Game* g, Player* p, const Card* c) {
+    return static_cast<const T*>(c)->cast_from_hand(p);
 }
 
 template<> struct is_player_burn<LavaAxe> : std::true_type{};
@@ -34,13 +34,15 @@ template<> struct is_player_burn<VolcanicHammer> : std::true_type{};
 template<> struct is_global_burn<VolcanicFallout> : std::true_type{};
 template<> struct is_global_burn<AngerOfTheGods> : std::true_type{};
 
-std::unordered_map<std::string, BurnRecognizer::play_burn_t> BurnRecognizer::playmap =
+#define BURN_PLAYMAP_MACRO(T) { &T::instance, play_burn<T> }
+
+std::unordered_map<const Card*, BurnRecognizer::play_burn_t> BurnRecognizer::playmap =
 {
-	{ "lavaaxe", play_burn < LavaAxe > },
-    { "lavaspike", play_burn < LavaSpike > },
-    { "volcanichammer", play_burn < VolcanicHammer > },
-	{ "lightningbolt", play_burn < LightningBolt> },
-	{ "shock", play_burn < Shock > },
-	{ "volcanicfallout", play_burn < VolcanicFallout > },
-    { "angerofthegods", play_burn < AngerOfTheGods > }
+	BURN_PLAYMAP_MACRO(LavaAxe),
+    BURN_PLAYMAP_MACRO(LavaSpike),
+    BURN_PLAYMAP_MACRO(VolcanicHammer),
+    BURN_PLAYMAP_MACRO(LightningBolt),
+    BURN_PLAYMAP_MACRO(Shock),
+    BURN_PLAYMAP_MACRO(VolcanicFallout),
+    BURN_PLAYMAP_MACRO(AngerOfTheGods)
 };

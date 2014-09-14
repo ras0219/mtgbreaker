@@ -1,11 +1,11 @@
 #include "action.hpp"
-#include "card_info.hpp"
 #include "game.hpp"
 #include "stackable.hpp"
 #include "player.hpp"
 #include "playerlogic.hpp"
 #include "utility.hpp"
 #include "modifier.hpp"
+#include "permanent.hpp"
 #include <algorithm>
 #include <iostream>
 #include <cassert>
@@ -105,11 +105,11 @@ void Game::premain() {
     resolve_priority();
 }
 
-void kill_card(Game* g, Card* x) {
+void kill_card(Game* g, Permanent* x) {
     auto& b = g->battlefield;
     auto it = std::find(b.begin(), b.end(), x);
     if (it == b.end()) {
-        std::cerr << "WARNING: attempted to kill dead card: " << x->info().id << "[" << (size_t)x << "]" << std::endl;
+        std::cerr << "WARNING: attempted to kill dead card: " << x->card->name << "[" << (size_t)x << "]" << std::endl;
         return;
     }
     x->for_each_mod([g, x](Modifier* m) {
@@ -118,14 +118,15 @@ void kill_card(Game* g, Card* x) {
     std::iter_swap(b.end() - 1, it);
     b.pop_back();
 
-    x->controller = x->owner;
-    x->owner->graveyard.push_back(x);
+    x->owner->graveyard.push_back(x->card);
 
     x->for_each_mod([g, x](Modifier* m) {
         m->removed_from_play(g, x);
     });
 
-    std::cerr << "Killed card: " << x->info().id << "[" << (size_t)x << "]" << std::endl;
+    std::cerr << "Killed card: " << x->card->name << "[" << (size_t)x << "]" << std::endl;
+
+    delete x;
 }
 
 void Game::handle_triggered_abilities(Player* p) {
@@ -198,7 +199,7 @@ void Game::combegin() {
     resolve_priority();
 }
 
-const char* valid_attacker(Game* g, Card* c) {
+const char* valid_attacker(Game* g, Permanent* c) {
     CHECK_RETURN(c);
     CHECK_RETURN(c->controller == g->active_player);
     CHECK_RETURN(!c->tapped);
@@ -208,7 +209,7 @@ const char* valid_attacker(Game* g, Card* c) {
     return nullptr;
 }
 
-const char* valid_blocker(Game* g, Card* def, Card* atk) {
+const char* valid_blocker(Game* g, Permanent* def, Permanent* atk) {
     CHECK_RETURN(def->controller != g->active_player);
     CHECK_RETURN(!def->tapped);
     auto& b = g->battlefield;
@@ -266,7 +267,7 @@ void Game::block() {
             std::cerr << "Someone messed up: " << check_res << std::endl;
             throw std::runtime_error(check_res);
         }
-        auto it = std::find(atk_blk.begin(), atk_blk.end(), std::pair < Card*, Card* > { a.second, nullptr });
+        auto it = std::find(atk_blk.begin(), atk_blk.end(), std::pair < Permanent*, Permanent* > { a.second, nullptr });
         if (atk_blk.end() == it)
         {
             auto msg = "Attempted to block attacker who isn't attacking (or blocked multiple times)";
@@ -339,7 +340,7 @@ void Game::cleanup() {
     }
 }
 
-const char* Game::is_valid_target_creature(Card* c) {
+const char* Game::is_valid_target_creature(Permanent* c) {
     if (!c->has_text("creature"))
         return "Target is not a creature";
     if (!is_in_play(c))

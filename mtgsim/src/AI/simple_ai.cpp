@@ -1,5 +1,4 @@
 #include "card.hpp"
-#include "card_info.hpp"
 #include "AI/ai.hpp"
 
 struct SimplePlayer : PlayerLogic {
@@ -16,13 +15,12 @@ struct SimplePlayer : PlayerLogic {
 		if (g->lands_played == 0)
 		{
 			// Search for lands
-			auto it = std::find_if(p->hand.begin(), p->hand.end(), [](Card* c) { return c->info().id == "forest"; });
+			auto it = std::find_if(p->hand.begin(), p->hand.end(), [](const Card* c) { return c == &Forest::instance; });
 			if (it != p->hand.end()) {
 				auto c = *it;
-				auto& i = c->info();
-				if (i.id == "forest") {
-					std::cerr << p->name << " plays " << i.id << std::endl;
-					return card_cast<Forest>(c)->playland_from_hand();
+				if (c == &Forest::instance) {
+                    std::cerr << p->name << " plays a forest" << std::endl;
+					return card_cast<Forest>(c)->play();
 				}
 			}
 		}

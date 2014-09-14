@@ -1,5 +1,4 @@
 #include "card.hpp"
-#include "card_info.hpp"
 #include "AI/ai.hpp"
 
 struct ManualAI : PlayerLogic{
@@ -22,11 +21,11 @@ struct ManualAI : PlayerLogic{
 
 		for (i = 0; i < p->hand.size(); i++)
 		{
-			Card *cur_card = p->hand.at(i);
-			std::cout << i << "." << cur_card->info().name << ", "
-				<< cur_card->info().power << "/"
-				<< cur_card->info().toughness << ", "
-				<< cur_card->info().cmc << std::endl;
+			const Card *cur_card = p->hand.at(i);
+			std::cout << i << "." << cur_card->name << ", "
+				<< cur_card->power << "/"
+				<< cur_card->toughness << ", "
+				<< cur_card->cmc << std::endl;
 		}
 		std::cout << i++ << "." << "Print info on card" << std::endl;
 		std::cout << i << "." << "Pass" << std::endl;
@@ -44,27 +43,27 @@ struct ManualAI : PlayerLogic{
 			{
 				unsigned int sel_card = 0;
 				do { std::cout << "enter number of card" << std::endl; std::cin >> sel_card; } while (sel_card > (i - 1));
-				Card *cur_card = p->hand.at(sel_card);
-				std::cout << cur_card->info().name << ", "
-					<< cur_card->info().power << "/"
-					<< cur_card->info().toughness << ", "
-					<< cur_card->info().cmc << std::endl;
+				const Card *cur_card = p->hand.at(sel_card);
+				std::cout << cur_card->name << ", "
+					<< cur_card->power << "/"
+					<< cur_card->toughness << ", "
+					<< cur_card->cmc << std::endl;
 				std::cout << "Detailed mana cost:" <<
-					cur_card->info().cost.pool << std::endl;
+					cur_card->cost.pool << std::endl;
 				std::cout << "";
 
-                for (auto& t : cur_card->info().texts)
+                for (auto& t : cur_card->texts)
                     std::cout << t << " ";
                 std::cout << std::endl;
 
-                for (auto& t : cur_card->info().abilities)
+                for (auto& t : cur_card->abilities)
                     std::cout << t << " ";
                 std::cout << std::endl;
                 continue;
 			}
 			else//play a card
 			{
-				Card *cur_card = p->hand.at(action);
+				const Card *cur_card = p->hand.at(action);
 				std::cout << "lol playing cards hard" << std::endl;
 				continue;
 			}

@@ -8,14 +8,14 @@ struct Game;
 struct Player;
 
 struct BurnRecognizer {
-	static bool can_recognize(Card* c);
+	static bool can_recognize(const Card* c);
 
-	static Action* recognize(Game* g, Player* p, Card* c);
+	static Action* recognize(Game* g, Player* p, const Card* c);
 
 private:
-	using play_burn_t = Action*(*)(Game*, Player*, Card*);
+	using play_burn_t = Action*(*)(Game*, Player*, const Card*);
 
-	static std::unordered_map<std::string, play_burn_t> playmap;
+	static std::unordered_map<const Card*, play_burn_t> playmap;
 };
 
 

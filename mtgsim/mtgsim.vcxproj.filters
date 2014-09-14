@@ -72,10 +72,10 @@
     <ClCompile Include="src\AI\manual_ai.cpp">
       <Filter>Source Files\AIs</Filter>
     </ClCompile>
-    <ClCompile Include="src\deck.cpp">
+    <ClCompile Include="src\burnrecognizer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\burnrecognizer.cpp">
+    <ClCompile Include="src\permanent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -155,19 +155,7 @@
     <ClInclude Include="include\card_mixin.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\deck.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\deck_static.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\card_class.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\card_class_static.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\card_info.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\modifier.hpp">
@@ -179,8 +167,17 @@
     <ClInclude Include="include\modifier_mixin.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
+    <ClInclude Include="include\permanent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\activated_ability.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\activated_ability_mixin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core_activated_abilities.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

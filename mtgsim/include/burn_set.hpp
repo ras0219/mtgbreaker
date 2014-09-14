@@ -8,12 +8,12 @@
 
 /// Mixin which implements a card with the text:
 /// <Derived> deals <DMG> damage to target creature or player.
-template<unsigned int DMG, class Derived, class Base = SpellMixinEx<Derived>>
+template<unsigned int DMG, class Derived, class Base = SpellMixin<Derived>>
 struct BurnSpellMixin : Base {
     template<class, class>
     friend struct SpellMixin;
 private:
-    void enact(Game* g, Player* p, Card* target)
+    void enact(Game* g, Player* p, Permanent* target) const
     {
         if (!target->has_text("creature"))
         {
@@ -27,7 +27,7 @@ private:
         }
         target->apply_damage(g, this, DMG);
     }
-    void enact(Game* g, Player* p, Player* target)
+    void enact(Game* g, Player* p, Player* target) const
     {
         target->apply_damage(g, this, DMG);
     }
@@ -37,43 +37,43 @@ struct LightningBolt : BurnSpellMixin<3, LightningBolt> { };
 struct VolcanicHammer : BurnSpellMixin<3, VolcanicHammer> { };
 struct Shock : BurnSpellMixin<2, Shock> { };
 
-struct LavaAxe : SpellMixinEx<LavaAxe> {
+struct LavaAxe : SpellMixin<LavaAxe> {
     template<class, class>
     friend struct SpellMixin;
 private:
-    void enact(Game* g, Player* p, Player* target);
+    void enact(Game* g, Player* p, Player* target) const;
 };
 
-struct LavaSpike : SpellMixinEx<LavaSpike> {
+struct LavaSpike : SpellMixin<LavaSpike> {
     template<class, class>
     friend struct SpellMixin;
 private:
-    void enact(Game* g, Player* p, Player* target);
+    void enact(Game* g, Player* p, Player* target) const;
 };
 
-struct SearingBlaze : SpellMixinEx<SearingBlaze> {
+struct SearingBlaze : SpellMixin<SearingBlaze> {
     template<class, class>
     friend struct SpellMixin;
 private:
-    void enact(Game* g, Player* p, Card* ct, Player* pt);
+    void enact(Game* g, Player* p, Permanent* ct, Player* pt) const;
 };
 
-struct AngerOfTheGods : SpellMixinEx < AngerOfTheGods > {
+struct AngerOfTheGods : SpellMixin < AngerOfTheGods > {
     template<class, class>
     friend struct SpellMixin;
 private:
-    void enact(Game* g, Player* p);
+    void enact(Game* g, Player* p) const;
 };
 
-struct VolcanicFallout : SpellMixinEx < VolcanicFallout > {
+struct VolcanicFallout : SpellMixin < VolcanicFallout > {
     template<class, class>
     friend struct SpellMixin;
 private:
-    void enact(Game* g, Player* p);
+    void enact(Game* g, Player* p) const;
 };
 
 #if 0
-struct BarbedLightning : SpellMixinEx<BarbedLightning> {
+struct BarbedLightning : SpellMixin<BarbedLightning> {
     template<class, class>
     friend struct SpellMixin;
 private:
