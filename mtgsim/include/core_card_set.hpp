@@ -6,31 +6,31 @@
 #include "spell.hpp"
 #include <memory>
 
+/////////////////////////////////////
+// Lands
+
 struct Forest : BasicLandMixin<ManaPool::GREEN, Forest> {};
 struct Swamp : BasicLandMixin<ManaPool::BLACK, Swamp> {};
 struct Mountain : BasicLandMixin<ManaPool::RED, Mountain> {};
 struct Island : BasicLandMixin<ManaPool::BLUE, Island> {};
 struct Plains : BasicLandMixin<ManaPool::WHITE, Plains> {};
 
+/////////////////////////////////////
+// Creatures
+
 struct ChargingBadger : CreatureMixin<ChargingBadger> {};
-#if 0
 struct WalkingCorpse : CreatureMixin<WalkingCorpse> {};
 struct TyphoidRats : CreatureMixin<TyphoidRats> {};
-struct BorderlandMarauder : CreatureMixin<BorderlandMarauder> {
-    BorderlandMarauder();
-    ~BorderlandMarauder();
 
-private:
-    friend struct BorderlandMarauderModifier;
-    std::unique_ptr<BorderlandMarauderModifier> mod;
+struct BorderlandMarauder : CreatureMixinEx<BorderlandMarauder> {
+    static void apply_base_modifiers(Game* g, Player* p, Permanent* m);
 };
-
-struct AlloyMyr : CreatureMixin<AlloyMyr> {
-    void tap_for_mana(Game* g, Player* p, ManaPool::Type t);
+struct AlloyMyr : CreatureMixinEx<AlloyMyr> {
+    static void apply_base_modifiers(Game* g, Player* p, Permanent* m);
 };
 
 /////////////////////////////////////
-#endif
+// Spells
 
 struct GiantGrowth : SpellMixin<GiantGrowth> {
     void enact(Game* g, Player* p, Permanent* tgt);

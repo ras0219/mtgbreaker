@@ -11,13 +11,12 @@ CardMixin<TYPENAME>::CardMixin() {                 \
     toughness = 0; \
 }
 
-// Lightning Bolt
-BURN_CARDMIXIN_MACRO(LightningBolt, "Lightning Bolt", 0, 1, "instant")
-BURN_CARDMIXIN_MACRO(VolcanicHammer, "Volcanic Hammer", 1, 1, "instant")
 BURN_CARDMIXIN_MACRO(Shock, "Shock", 0, 1, "instant")
 BURN_CARDMIXIN_MACRO(LavaAxe, "Lava Axe", 4, 1, "sorcery")
 BURN_CARDMIXIN_MACRO(LavaSpike, "Lava Spike", 0, 1, "sorcery", "arcane")
 BURN_CARDMIXIN_MACRO(SearingBlaze, "Searing Blaze", 0, 2, "instant")
+BURN_CARDMIXIN_MACRO(LightningBolt, "Lightning Bolt", 0, 1, "instant")
+BURN_CARDMIXIN_MACRO(VolcanicHammer, "Volcanic Hammer", 1, 1, "instant")
 BURN_CARDMIXIN_MACRO(AngerOfTheGods, "Anger of the Gods", 1, 2, "sorcery")
 BURN_CARDMIXIN_MACRO(VolcanicFallout, "Volcanic Fallout", 1, 2, "instant")
 

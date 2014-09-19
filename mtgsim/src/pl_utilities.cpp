@@ -155,13 +155,13 @@ const Card* find_playable_creature_with_attributes(Game* g, Player* p, std::func
 	return *ret;
 }
 
-#define PLAY_CREATURE_MACRO(TYPE) if (c == &TYPE::instance) return TYPE::cast_from_hand(p)
-
 Action* play_creature(Player* p, const Card* c)
 {
+#define PLAY_CREATURE_MACRO(TYPE) if (c == &TYPE::instance) return TYPE::cast_from_hand(p)
     PLAY_CREATURE_MACRO(ChargingBadger);
-    /*PLAY_CREATURE_MACRO(WalkingCorpse);
+    PLAY_CREATURE_MACRO(WalkingCorpse);
     PLAY_CREATURE_MACRO(TyphoidRats);
-    PLAY_CREATURE_MACRO(AlloyMyr);*/
+    PLAY_CREATURE_MACRO(AlloyMyr);
+#undef PLAY_CREATURE_MACRO
     return nullptr;
 }

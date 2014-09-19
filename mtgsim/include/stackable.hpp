@@ -15,6 +15,7 @@ struct SpellStackable : Stackable
 {
     SpellStackable(const Card* c) : card(c) {}
     /// All of this is kludge; TODO: find a better way. Probably involving uniquely naming each possible effect.
+    /// NEW TODO: Unique each effect.
     virtual Permanent* card_target1() { return ct1; }
     virtual Permanent* card_target2() { return ct2; }
     virtual Player* player_target1() { return p1; }
@@ -43,4 +44,3 @@ template<class F>
 SpellStackable* make_stackable(const Card* c, F f) {
     return new FunctorSpellStackable<F>(c, std::move(f));
 }
-

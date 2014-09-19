@@ -10,6 +10,12 @@
 #include <iostream>
 #include <cassert>
 
+template<> void Game::add<Game::Detach>(Game::Detach* t) { m_ds.push_back(t); }
+template<> void Game::rem<Game::Detach>(Game::Detach* t) { m_ds.erase(std::find(m_ds.begin(), m_ds.end(), t)); }
+
+template<> void Game::add<EndOfTurnTrigger>(EndOfTurnTrigger* t) { eot_triggers.push_back(t); }
+template<> void Game::rem<EndOfTurnTrigger>(EndOfTurnTrigger* t) { eot_triggers.erase(std::find(eot_triggers.begin(), eot_triggers.end(), t)); }
+
 void set_mana_zero(Player* p)
 {
     for (auto& x : p->mana.pool)

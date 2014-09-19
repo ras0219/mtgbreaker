@@ -4,6 +4,7 @@
 #include "player.hpp"
 #include "modifier.hpp"
 #include "modifier_mixin.hpp"
+#include <map>
 
 CardMixin<ChargingBadger>::CardMixin() {
     name = "Charging Badger";
@@ -15,150 +16,93 @@ CardMixin<ChargingBadger>::CardMixin() {
     toughness = 1;
 };
 
-#if 0
-template<>
-const WalkingCorpse CardMixin<WalkingCorpse>::instance = Card{
-    "walkingcorpse",
-    "Walking Corpse",
-    { "black", "creature", "zombie" },
-    {},
-    2,
-    ManaPool(std::array<unsigned int, 6>{{1, 0, 1, 0, 0, 0}}),
-    2,
-    2
+CardMixin<WalkingCorpse>::CardMixin() {
+    name = "Walking Corpse";
+    texts = { "black", "creature", "zombie" };
+    cmc = 2;
+    cost = ManaPool(std::array < unsigned int, 6 > {{1, 0, 1, 0, 0, 0}});
+    power = 2;
+    toughness = 2;
 };
 
-template<>
-const TyphoidRats CardMixin<TyphoidRats>::instance = {
-    "typhoidrats",
-    "Typhoid Rats",
-    { "black", "creature", "rat" },
-    { "deathtouch" },
-    1,
-    ManaPool(std::array<unsigned int, 6>{{0, 0, 1, 0, 0, 0}}),
-    1,
-    1
+CardMixin<TyphoidRats>::CardMixin() {
+    name = "Typhoid Rats";
+    texts = { "black", "creature", "rat" };
+    abilities = { "deathtouch" };
+    cmc = 1;
+    cost = ManaPool(std::array < unsigned int, 6 > {{0, 0, 1, 0, 0, 0}});
+    power = 1;
+    toughness = 1;
 };
-/////////////////////////////////////
-template<>
-const BorderlandMarauder CardMixin<BorderlandMarauder>::instance = {
-    "borderlandmarauder",
-    "Borderland Marauder",
-    { "red", "creature", "human", "warrior" },
-    {},
-    2,
-    ManaPool(std::array<unsigned int, 6>{{1, 0, 0, 1, 0, 0}}),
-    1,
-    2
+
+CardMixin<BorderlandMarauder>::CardMixin() {
+    name = "Borderland Marauder";
+    texts = { "red", "creature", "human", "warrior" };
+    cmc = 2;
+    cost = ManaPool(std::array < unsigned int, 6 > {{1, 0, 0, 1, 0, 0}});
+    power = 1;
+    toughness = 2;
+};
+
+struct BorderlandMarauderBuff : TillEndOfTurnL7Mixin<BorderlandMarauderBuff> {
+    BorderlandMarauderBuff(Game* g) : TillEndOfTurnL7Mixin<BorderlandMarauderBuff>(g) {}
+
+    int power(int prev) const { return prev + 2; }
+    int toughness(int prev) const { return prev; }
 };
 
 struct BorderlandMarauderBuffStackable : Stackable {
-    BorderlandMarauderBuffStackable(Card* bm, BorderlandMarauderModifier* l7m) : c(bm), l7(l7m) {}
+    BorderlandMarauderBuffStackable(Permanent* bm) : c(bm) {}
 
-    void resolve(Game* g);
-
-    Card* c;
-    BorderlandMarauderModifier* l7;
-};
-
-struct BorderlandMarauderModifier : EndOfTurnModifierMixin<BorderlandMarauderModifier, L7PlusModifier> {
-    void end_of_turn(Game* g, Card* c) {
-        while (applications > 0) {
-            c->rem_l7(this);
-            --applications;
-        }
-    }
-    void when_attacks(Game* g, Card* c) {
-        static_cast<BorderlandMarauder*>(c)->trigger(new BorderlandMarauderBuffStackable{c, this});
+    void resolve(Game* g) {
+        BorderlandMarauderBuff::instance(g)->attach(c);
     }
 
-    // L7 stuff
-    int power(int prev) const { return prev + 2; }
-    int toughness(int prev) const { return prev; }
-
-private:
-    int applications = 0;
+    Permanent* c;
 };
 
-void BorderlandMarauderBuffStackable::resolve(Game* g) {
-    c->add_l7(l7);
-}
+struct BorderlandMarauderModifier : Modifier {
+    void when_attacks(Game*, Permanent* c) {
+        c->trigger(new BorderlandMarauderBuffStackable{c});
+    }
 
-BorderlandMarauder::BorderlandMarauder() : mod{ std::make_unique<BorderlandMarauderModifier>() }
-{
-    add_mod(static_cast<Modifier*>(mod.get()));
-}
-BorderlandMarauder::~BorderlandMarauder()
-{
-    rem_mod(static_cast<Modifier*>(mod.get()));
+    static BorderlandMarauderModifier instance;
+};
+BorderlandMarauderModifier BorderlandMarauderModifier::instance;
+
+void BorderlandMarauder::apply_base_modifiers(Game* g, Player* p, Permanent* m) {
+    m->add<Modifier>(&BorderlandMarauderModifier::instance);
 }
 
 /////////////////////////////////////
-
-template<>
-const AlloyMyr CardMixin<AlloyMyr>::instance = {
-    "alloymyr",
-    "Alloy Myr",
-    { "colorless", "artifact", "creature", "myr" },
-    {},
-    3,
-    ManaPool(std::array<unsigned int, 6>{{3, 0, 0, 0, 0, 0}}),
-    2,
-    2
+CardMixin<AlloyMyr>::CardMixin() {
+    name = "Alloy Myr";
+    texts = { "colorless", "artifact", "creature", "myr" };
+    cmc = 3;
+    cost = ManaPool(std::array < unsigned int, 6 > {{3, 0, 0, 0, 0, 0}});
+    power = 2;
+    toughness = 2;
 };
 
-void AlloyMyr::tap_for_mana(Game* g, Player* p, ManaPool::Type t) {
-    auto msg = can_tap(g, p);
-    if (msg)
-        throw std::runtime_error(msg);
-    if (sick)
-        throw std::runtime_error("Cannot tap creatures with summoning sickness");
-
-    tap(g, p);
-    p->mana += t;
+void AlloyMyr::apply_base_modifiers(Game* g, Player* p, Permanent* m) {
+    m->abilities.push_back(&TapForAnyManaAbility::instance);
 }
 
-#endif
 /// Lands
-CardMixin<Forest>::CardMixin() {
-    name = "Forest";
-    texts = { "colorless", "land", "basicland" };
-    cmc = 0;
-    power = 0;
-    toughness = 0;
-};
+#define LAND_MIXIN_MACRO(TYPE) \
+CardMixin<TYPE>::CardMixin() { \
+    name = #TYPE; \
+    texts = { "colorless", "land", "basicland" }; \
+    cmc = 0; \
+    power = 0; \
+    toughness = 0; \
+}
 
-CardMixin<Mountain>::CardMixin() {
-    name = "Mountain";
-    texts = { "colorless", "land", "basicland" };
-    cmc = 0;
-    power = 0;
-    toughness = 0;
-};
-
-CardMixin<Swamp>::CardMixin() {
-    name = "Swamp";
-    texts = { "colorless", "land", "basicland" };
-    cmc = 0;
-    power = 0;
-    toughness = 0;
-};
-
-CardMixin<Plains>::CardMixin() {
-    name = "Plains";
-    texts = { "colorless", "land", "basicland" };
-    cmc = 0;
-    power = 0;
-    toughness = 0;
-};
-
-CardMixin<Island>::CardMixin() {
-    name = "Island";
-    texts = { "colorless", "land", "basicland" };
-    cmc = 0;
-    power = 0;
-    toughness = 0;
-};
+LAND_MIXIN_MACRO(Forest);
+LAND_MIXIN_MACRO(Island);
+LAND_MIXIN_MACRO(Mountain);
+LAND_MIXIN_MACRO(Swamp);
+LAND_MIXIN_MACRO(Plains);
 
 //////////////
 
@@ -171,11 +115,8 @@ CardMixin<GiantGrowth>::CardMixin() {
     toughness = 0;
 };
 
-struct GiantGrowthModifier : EndOfTurnModifierMixin<GiantGrowthModifier, L7PlusModifier> {
-    void end_of_turn(Game* g, Permanent* c) {
-        c->rem_l7(this);
-        pending_removal = true;
-    }
+struct GiantGrowthModifier : TillEndOfTurnL7Mixin<GiantGrowthModifier> {
+    GiantGrowthModifier(Game* g) : TillEndOfTurnL7Mixin < GiantGrowthModifier >(g) {}
 
     int power(int prev) const { return prev + 3; }
     int toughness(int prev) const { return prev + 3; }
@@ -187,8 +128,5 @@ void GiantGrowth::enact(Game* g, Player* p, Permanent* ct) {
         return;
     }
 
-    auto ggm = new GiantGrowthModifier;
-
-    ct->add_mod(ggm);
-    ct->add_l7(ggm);
+    GiantGrowthModifier::instance(g)->attach(ct);
 }

@@ -18,7 +18,7 @@
         return __FILE__ ":" STRINGIFY(__LINE__) ": " #X; \
     }
 
-template<class...Args> struct IMulti : Args... {};
+template<class...Args> struct IMulti : virtual Args... {};
 
 #if !defined(_MSC_VER)
 // Really tho, you guys need to get on that

@@ -6,6 +6,23 @@
 #include "player.hpp"
 #include "permanent.hpp"
 
+template<> void Permanent::add<const L3Modifier>(const L3Modifier* m) { m_l3.push_back(m); }
+template<> void Permanent::add<const L6Modifier>(const L6Modifier* m) { m_l6.push_back(m); }
+template<> void Permanent::add<const L7Modifier>(const L7Modifier* m) { m_l7.push_back(m); }
+template<> void Permanent::add<Modifier>(Modifier* m) { m_mods.push_back(m); }
+template<> void Permanent::add<Permanent::Detach>(Permanent::Detach* m) { m_ds.push_back(m); }
+
+template<> void Permanent::rem<const L3Modifier>(const L3Modifier* m) { m_l3.erase(std::remove(m_l3.begin(), m_l3.end(), m)); }
+template<> void Permanent::rem<const L6Modifier>(const L6Modifier* m) { m_l6.erase(std::remove(m_l6.begin(), m_l6.end(), m)); }
+template<> void Permanent::rem<const L7Modifier>(const L7Modifier* m) { m_l7.erase(std::remove(m_l7.begin(), m_l7.end(), m)); }
+template<> void Permanent::rem<Modifier>(Modifier* m) { m_mods.erase(std::remove(m_mods.begin(), m_mods.end(), m)); }
+template<> void Permanent::rem<Permanent::Detach>(Permanent::Detach* m) { nstd::unstable_erase_first(m_ds, m); }
+
+Permanent::~Permanent() {
+    for (auto x : m_ds)
+        x->detach(this);
+}
+
 const char* Permanent::can_tap(Game* g, Player* p) const {
     // Does the player control it?
     CHECK_RETURN(controller == p);

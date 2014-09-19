@@ -15,3 +15,7 @@ template<ManaPool::Type T>
 struct TapForManaAbility : ActivatedAbilityMixin<TapForManaAbility<T>> {
     static void tap_for_mana(Game* g, Player* p, Permanent* c) { detail::tap_for_mana_impl(g, p, c, T); }
 };
+
+struct TapForAnyManaAbility : ActivatedAbilityMixin<TapForAnyManaAbility> {
+    static void tap_for_mana(Game* g, Player* p, Permanent* c, ManaPool::Type t) { detail::tap_for_mana_impl(g, p, c, t); }
+};

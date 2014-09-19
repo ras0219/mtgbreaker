@@ -15,6 +15,6 @@ namespace detail {
 
         ++p->mana[t];
 
-        m->tapped = true;
+        m->tap(g, p);
     }
 }
