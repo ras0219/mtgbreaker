@@ -41,15 +41,6 @@ struct Permanent {
     bool sick;
     unsigned int damage;
 
-    template<class F>
-    void for_each_mod(F f) {
-        for (auto m : m_mods)
-            f(m);
-        auto it = std::partition(m_mods.begin(), m_mods.end(), [](Modifier* m) { return !m->pending_removal; });
-        std::for_each(it, m_mods.end(), [](Modifier* m){ delete m; });
-        m_mods.erase(it, m_mods.end());
-    }
-
     void trigger(Stackable* s);
 
     // Detach is an interface implemented by effects which allows them to be notified when the permanent is to be deleted
@@ -57,6 +48,8 @@ struct Permanent {
         virtual ~Detach() {}
         virtual void detach(Permanent*) = 0;
     };
+
+    friend struct Game;
 
 protected:
     std::vector<Modifier*> m_mods;

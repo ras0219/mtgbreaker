@@ -7,4 +7,4 @@ struct ActivatedAbilityMixin : Base {
     static const Derived instance;
 };
 template<class Derived, class Base>
-const Derived ActivatedAbilityMixin<Derived, Base>::instance = {};
+const Derived ActivatedAbilityMixin<Derived, Base>::instance;

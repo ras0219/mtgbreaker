@@ -118,17 +118,17 @@ void kill_card(Game* g, Permanent* x) {
         std::cerr << "WARNING: attempted to kill dead card: " << x->card->name << "[" << (size_t)x << "]" << std::endl;
         return;
     }
-    x->for_each_mod([g, x](Modifier* m) {
+/*    x->for_each_mod([g, x](Modifier* m) {
         m->destroyed(g, x);
-    });
+   }); */
     std::iter_swap(b.end() - 1, it);
     b.pop_back();
 
     x->owner->graveyard.push_back(x->card);
 
-    x->for_each_mod([g, x](Modifier* m) {
+/*    x->for_each_mod([g, x](Modifier* m) {
         m->removed_from_play(g, x);
-    });
+    });*/
 
     std::cerr << "Killed card: " << x->card->name << "[" << (size_t)x << "]" << std::endl;
 
@@ -251,9 +251,9 @@ void Game::attack() {
 
     // Trigger "when X attacks..." here
     for (auto a : attackers) {
-        a->for_each_mod([this, a](Modifier* m) {
+        for (auto m : a->m_mods) {
             m->when_attacks(this, a);
-        });
+        }
     }
 
     resolve_priority();
@@ -338,11 +338,11 @@ void Game::cleanup() {
         p->hand.erase(p->hand.end() - diff, p->hand.end());
     }
 
+    for (auto m : eot_triggers) {
+        m->end_of_turn(this);
+    }
     for (auto c : battlefield) {
         c->damage = 0;
-        c->for_each_mod([this, c](Modifier* m) {
-            m->end_of_turn(this, c);
-        });
     }
 }
 

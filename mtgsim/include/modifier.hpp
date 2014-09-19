@@ -10,16 +10,12 @@ enum ternary {
 };
 
 struct Modifier {
-    virtual ~Modifier() {}
-
-    virtual void end_of_turn(Game* g, Permanent* c) { }
     virtual void destroyed(Game* g, Permanent* c) { }
     virtual void removed_from_play(Game* g, Permanent* c) { }
     virtual void when_attacks(Game* g, Permanent* c) { }
 
 protected:
-    friend struct Permanent;
-    bool pending_removal = false;
+    virtual ~Modifier() {}
 };
 
 /// 613.1c Layer 3: Text-changing effects are applied. See rule 612, “Text-Changing Effects.”
